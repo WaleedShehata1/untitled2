@@ -302,9 +302,14 @@ class DoctorCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(doctor.imagePath),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  doctor.imagePath,
+                  width: 75,
+                  height: 75,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 16),
               Column(
@@ -323,10 +328,10 @@ class DoctorCard extends StatelessWidget {
                       const Icon(Icons.location_on),
                       const SizedBox(width: 4),
                       Text(doctor.location),
+                      const SizedBox(width: 25),
+                      const Text('Price:100\$'),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  const Text('Price:100\$'),
                   const SizedBox(height: 4),
                   Row(
                     children: [
@@ -337,10 +342,10 @@ class DoctorCard extends StatelessWidget {
                         style: const TextStyle(fontSize: 16),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 40),
+                        padding: const EdgeInsets.only(left: 85),
                         child: SizedBox(
-                          width: 90,
-                          child: ElevatedButton(
+                          height: 30,
+                          child: TextButton(
                             onPressed: () {
                               // عرض مربع حوار لإدخال البيانات
                               showDialog(
@@ -370,18 +375,26 @@ class DoctorCard extends StatelessWidget {
                                           backgroundColor:
                                               defultColor, // تعيين لون الخلفية إلى اللون الأخضر
                                         ),
-                                        child: const Text('Send'),
+                                        child: const Text('Send',
+                                            style:
+                                                TextStyle(color: Colors.white)),
                                       ),
                                     ],
                                   );
                                 },
                               );
                             },
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        defultColor)),
-                            child: const Text('Book'),
+                            style: TextButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                            ),
+                            child: const Text(
+                              'reservation',
+                              style: TextStyle(
+                                  color: defultColor,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16),
+                            ),
                           ),
                         ),
                       )
@@ -391,7 +404,7 @@ class DoctorCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
           Text(
             'Specialization: ${doctor.specialty}',
             style: const TextStyle(

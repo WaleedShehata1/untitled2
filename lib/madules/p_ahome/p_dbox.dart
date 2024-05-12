@@ -1,13 +1,14 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:untitled/madules/p_ahome/p_amap.dart';
-import '../p_ahome/p_ahelp.dart';
 
 import '../../shared/componente.dart';
-import 'p_ahome.dart';
-import 'p_anotifications.dart';
-import 'p_aprofile.dart';
+
+import 'p_dhelp.dart';
+import 'p_dmap.dart';
+import 'p_dnotifications.dart';
+import 'p_profile.dart';
+import 'p_dsearch.dart';
 
 class p_abox extends StatefulWidget {
   const p_abox({super.key});
@@ -19,10 +20,12 @@ class p_abox extends StatefulWidget {
 class _p_aboxState extends State<p_abox> {
   int _selectedIndex = 0;
   final List<Widget> _pages = <Widget>[
-    const p_ahome(),
+    p_asearch(
+      appointments: const [],
+    ),
     const p_amap(),
-    p_aprofile(),
-    p_anotifications(),
+    const p_aprofile(),
+    const p_anotifications(),
     const p_ahelp()
   ];
   void _onItemTapped(int index) {
@@ -38,24 +41,27 @@ class _p_aboxState extends State<p_abox> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.white30,
+            backgroundColor: Colors.white,
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.white30,
+            backgroundColor: Colors.white,
             icon: Icon(Icons.location_on),
             label: 'Map',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(Icons.person),
             label: 'Prfile',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            label: 'Notification',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.help_outline,
             ),
@@ -63,7 +69,9 @@ class _p_aboxState extends State<p_abox> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: defultColor2,
+        backgroundColor: Colors.red,
+        selectedItemColor: defultColor,
+        unselectedItemColor: defultColor2,
         onTap: _onItemTapped,
       ),
     );

@@ -1,8 +1,17 @@
-// ignore_for_file: unused_local_variable, camel_case_types
+// ignore_for_file: public_member_api_docs, sort_constructors_first, camel_case_types, must_be_immutable, use_super_parameters
+
+// ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
 
 import '../../shared/componente.dart';
+
+class DoctorAppointment {
+  final String doctorName;
+  final String appointmentDate;
+
+  DoctorAppointment({required this.doctorName, required this.appointmentDate});
+}
 
 class Doctor {
   final String name;
@@ -20,40 +29,55 @@ class Doctor {
   });
 }
 
-class p_ahome extends StatefulWidget {
-  const p_ahome({super.key});
+class p_asearch extends StatefulWidget {
+  List<DoctorAppointment> appointments = [];
+
+  p_asearch({
+    Key? key,
+    required this.appointments,
+  }) : super(key: key);
 
   @override
-  State<p_ahome> createState() => _p_ahomeState();
+  State<p_asearch> createState() => _p_asearchState();
 }
 
-class _p_ahomeState extends State<p_ahome> {
+class _p_asearchState extends State<p_asearch> {
+  bool isAppointmentAccepted = false;
+
   String searchValue = '';
   String? selectedLocation;
+
   String? selectedSpecialty;
   List<Doctor> filteredDoctors = [];
 
   final List<Doctor> doctors = [
     Doctor(
-      name: 'دكتور أحمد',
+      name: 'Dr. Ahmed',
       rating: 4.5,
-      location: 'القاهرة',
-      specialty: 'طبيب عام',
-      imagePath: 'assets/images/doctor1.jpg',
+      location: 'Cairo',
+      specialty: 'General Doctor',
+      imagePath: 'assets/images/doctor2.jpg',
     ),
     Doctor(
-      name: 'دكتور محمد',
+      name: 'Dr.Heba',
       rating: 4.2,
-      location: 'الإسكندرية',
-      specialty: 'جراحة عامة',
+      location: 'Alexandria',
+      specialty: 'obstetrics and gynecology',
       imagePath: 'assets/images/doctor1.jpg',
     ),
     Doctor(
-      name: 'دكتور أمير',
+      name: 'Dr. Amir',
       rating: 4.8,
-      location: 'الإسكندرية',
-      specialty: 'أطفال',
-      imagePath: 'assets/images/doctor1.jpg',
+      location: 'Aswan',
+      specialty: 'Neurologists',
+      imagePath: 'assets/images/doctor3.jpg',
+    ),
+    Doctor(
+      name: 'Dr.manar',
+      rating: 4.8,
+      location: 'Elshorouk',
+      specialty: 'onram',
+      imagePath: 'assets/images/doctor4.jpg',
     ),
   ];
 
@@ -75,18 +99,25 @@ class _p_ahomeState extends State<p_ahome> {
             .where((doctor) =>
                 doctor.name.toLowerCase().contains(searchValue.toLowerCase()))
             .toList();
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('قائمة الأطباء'),
         actions: [
-          IconButton(
-              icon: const Icon(Icons.arrow_right),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              color: defultColor),
+          SizedBox(
+              width: 60,
+              height: 60,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: logo,
+              ))
         ],
+        backgroundColor: Colors.white54,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: defultColor),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -98,8 +129,9 @@ class _p_ahomeState extends State<p_ahome> {
                 Expanded(
                   child: TextField(
                     decoration: const InputDecoration(
-                      hintText: 'ابحث عن اسم الطبيب',
-                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Search for the doctor\'s name',
+                      hintStyle: TextStyle(color: defultColor),
+                      prefixIcon: Icon(Icons.search, color: defultColor),
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -110,20 +142,28 @@ class _p_ahomeState extends State<p_ahome> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.filter_alt),
+                  color: defultColor,
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return FilterDialog(
-                          locations: const ['القاهرة', 'الإسكندرية'],
+                          locations: const [
+                            'Cairo',
+                            'Alexandria',
+                            'Aswan',
+                            'Elshorouk',
+                          ],
                           specialties: const [
-                            'طبيب عام',
-                            'جراحة عامة',
-                            'أطفال'
+                            'General Doctor',
+                            'obstetrics and gynecology',
+                            'Neurologists',
+                            'onram',
                           ],
                           onFilterChanged: (location, specialty) {
                             setState(() {
                               selectedLocation = location;
+
                               selectedSpecialty = specialty;
                             });
                             Navigator.pop(context);
@@ -153,6 +193,7 @@ class _p_ahomeState extends State<p_ahome> {
 
 class FilterDialog extends StatelessWidget {
   final List<String> locations;
+
   final List<String> specialties;
   final Function(String?, String?) onFilterChanged;
 
@@ -166,18 +207,20 @@ class FilterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? selectedLocation;
+    String? selectedprice;
+
     String? selectedSpecialty;
     String? searchText;
 
     return AlertDialog(
-      title: const Text('Determine'),
+      title: const Text('Determine the desired doctor'),
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               decoration: const InputDecoration(
-                hintText: 'Search for the doctor\'s name',
+                hintText: 'Search',
               ),
               onChanged: (value) {
                 searchText = value;
@@ -225,7 +268,7 @@ class FilterDialog extends StatelessWidget {
           onPressed: () {
             onFilterChanged(selectedLocation, selectedSpecialty);
           },
-          child: const Text('search'),
+          child: const Text('Search'),
         ),
       ],
     );
@@ -259,9 +302,14 @@ class DoctorCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(doctor.imagePath),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  doctor.imagePath,
+                  width: 75,
+                  height: 75,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 16),
               Column(
@@ -280,6 +328,8 @@ class DoctorCard extends StatelessWidget {
                       const Icon(Icons.location_on),
                       const SizedBox(width: 4),
                       Text(doctor.location),
+                      const SizedBox(width: 25),
+                      const Text('Price:100\$'),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -291,13 +341,70 @@ class DoctorCard extends StatelessWidget {
                         doctor.rating.toString(),
                         style: const TextStyle(fontSize: 16),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 85),
+                        child: SizedBox(
+                          height: 30,
+                          child: TextButton(
+                            onPressed: () {
+                              // عرض مربع حوار لإدخال البيانات
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title:
+                                        const Text('Enter Price and Location'),
+                                    content: const Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        TextField(
+                                          decoration: InputDecoration(
+                                            labelText: 'Location',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          // تنفيذ عند الضغط على زر الحفظ
+                                          // يمكنك القيام بالإجراءات المناسبة هنا
+                                          Navigator.of(context).pop();
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              defultColor, // تعيين لون الخلفية إلى اللون الأخضر
+                                        ),
+                                        child: const Text('Send',
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            style: TextButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                            ),
+                            child: const Text(
+                              'reservation',
+                              style: TextStyle(
+                                  color: defultColor,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 10),
           Text(
             'Specialization: ${doctor.specialty}',
             style: const TextStyle(

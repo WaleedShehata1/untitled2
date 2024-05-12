@@ -89,7 +89,7 @@ class a_login extends StatelessWidget {
             height: 40,
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
                 Navigator.push(
@@ -99,7 +99,7 @@ class a_login extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text('Next >'),
+              child: const Text('Log In'),
             ),
           ),
           Padding(

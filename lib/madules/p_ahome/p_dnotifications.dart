@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import '../../shared/componente.dart';
 
 // ignore: camel_case_types
-class p_dnotifications extends StatelessWidget {
-  const p_dnotifications({super.key});
+class p_anotifications extends StatelessWidget {
+  const p_anotifications({super.key});
 
   @override
   Widget build(BuildContext context) {

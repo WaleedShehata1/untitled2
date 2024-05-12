@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/shared/componente.dart';
 
-class p_dhelp extends StatelessWidget {
-  const p_dhelp({super.key});
+class p_ahelp extends StatelessWidget {
+  const p_ahelp({super.key});
 
   @override
   Widget build(BuildContext context) {

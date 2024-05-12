@@ -13,14 +13,14 @@ import '../../function/loction_map.dart';
 import '../../static/serach_location_widget.dart';
 import '../../static/static.dart';
 
-class p_dmap extends StatefulWidget {
-  const p_dmap({super.key});
+class p_amap extends StatefulWidget {
+  const p_amap({super.key});
 
   @override
-  State<p_dmap> createState() => _p_dmapState();
+  State<p_amap> createState() => _p_amapState();
 }
 
-class _p_dmapState extends State<p_dmap> {
+class _p_amapState extends State<p_amap> {
   GoogleMapController? _mapController;
 
   final Set<Marker> markers = Set();

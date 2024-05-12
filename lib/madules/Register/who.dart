@@ -103,7 +103,7 @@ class _whoscreanState extends State<whoscrean> {
                                   defultColor2)),
                           child: const Text(
                             'Ok',
-                            style: TextStyle(color: defultColor),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),

@@ -9,8 +9,8 @@ var logo = const Image(
     'assets/images/logo-1-sos.png',
   ),
 );
-const defultColor = Colors.blue;
-const defultColor2 = Colors.white;
+const defultColor = Color.fromARGB(255, 23, 20, 240);
+const defultColor2 = Color.fromARGB(255, 102, 100, 100);
 var P_profile = const Padding(
   padding: EdgeInsets.only(right: 16.0),
   child: CircleAvatar(
@@ -48,7 +48,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
               },
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(15.0),
             )),
       ),
     );

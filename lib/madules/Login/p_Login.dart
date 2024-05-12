@@ -14,8 +14,6 @@ class login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(
             height: 70,
@@ -35,100 +33,113 @@ class login extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              style: const TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(
-                    vertical: 15.0, horizontal: 15.0),
-                labelStyle: TextStyle(
-                  color: Colors.grey[600],
-                ),
-                labelText: 'Enter your email',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
-          const PasswordTextField(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Column(
             children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const verify(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  style: const TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 15.0),
+                    labelStyle: TextStyle(
+                      color: Colors.grey[600],
                     ),
-                  );
-                },
-                child: const Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                    color: Color.fromRGBO(0, 0, 255, 1),
+                    labelText: 'Enter your email',
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: 250,
-            height: 40,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const whowant(),
+              const PasswordTextField(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 20,
                   ),
-                );
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(color: defultColor),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const verify(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'New Member?',
-                  style: TextStyle(color: Colors.white),
-                ),
-                TextButton(
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: 250,
+                height: 40,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const whoscrean(),
+                        builder: (context) => const whowant(),
                       ),
                     );
                   },
                   child: const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Color.fromRGBO(0, 0, 255, 1),
-                    ),
+                    'Login',
+                    style: TextStyle(color: defultColor),
                   ),
                 ),
-              ],
-            ),
-          )
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    const Text(
+                      'New Member?',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const whoscrean(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Register now',
+                        style: TextStyle(
+                          color: Color.fromRGBO(0, 0, 255, 1),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ],
       ),
       backgroundColor: defultColor,

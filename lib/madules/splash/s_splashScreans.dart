@@ -40,7 +40,7 @@ class s_splashScrean extends StatelessWidget {
                   child: const Text(
                     'Skip',
                     style: TextStyle(
-                        color: defultColor,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 15),
                   ),
@@ -60,7 +60,7 @@ class s_splashScrean extends StatelessWidget {
                   'Find your health',
                   style: TextStyle(
                       fontSize: 25,
-                      color: defultColor,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
               ],
@@ -78,7 +78,10 @@ class s_splashScrean extends StatelessWidget {
                     overflow: TextOverflow
                         .ellipsis, // استخدم النقاط المعلقة في حالة التجاوز
                     maxLines: 2,
-                    style: TextStyle(fontSize: 20, color: defultColor),
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -95,7 +98,10 @@ class s_splashScrean extends StatelessWidget {
                         builder: (context) => const th_splashScrean()));
               },
               backgroundColor: defultColor,
-              child: const Icon(Icons.arrow_forward),
+              child: const Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+              ),
             ),
           ),
           Positioned(

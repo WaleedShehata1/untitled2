@@ -1,26 +1,26 @@
 // ignore_for_file: prefer_collection_literals
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../../const/market.dart';
-import '../../function/loction_map.dart';
-import '../../static/serach_location_widget.dart';
-import '../../static/static.dart';
+import '../function/loction_map.dart';
+import '../static/serach_location_widget.dart';
+import '../static/static.dart';
+import 'market.dart';
 
-class p_dmap extends StatefulWidget {
-  const p_dmap({super.key});
+class Hospitals extends StatefulWidget {
+  const Hospitals({super.key});
 
   @override
-  State<p_dmap> createState() => _p_dmapState();
+  State<Hospitals> createState() => _HospitalsState();
 }
 
-class _p_dmapState extends State<p_dmap> {
+class _HospitalsState extends State<Hospitals> {
   GoogleMapController? _mapController;
 
   final Set<Marker> markers = Set();
@@ -126,10 +126,6 @@ class _p_dmapState extends State<p_dmap> {
                 description,
                 style: const TextStyle(color: Colors.blue),
               ),
-              Row(
-                  // mainAxisAlignment:
-                  // MainAxisAlignment.end,
-                  children: []),
             ],
           ),
         ),

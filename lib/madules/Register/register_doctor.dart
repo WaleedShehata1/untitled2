@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/componente.dart';
-import '../Login/p_Login.dart';
+import '../Login/d_Login.dart';
 
 class r_doctor extends StatefulWidget {
   const r_doctor({super.key});
@@ -101,10 +101,10 @@ class _r_doctorState extends State<r_doctor> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  width: 295,
+                  width: 350,
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0)),
+                      borderRadius: BorderRadius.circular(25.0)),
                   child: DropdownButtonFormField(
                     decoration: InputDecoration(
                       counterStyle: const TextStyle(
@@ -125,7 +125,7 @@ class _r_doctorState extends State<r_doctor> {
                       filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
-                          15,
+                          20,
                         ),
                         borderSide:
                             const BorderSide(color: defultColor, width: 2),
@@ -168,18 +168,22 @@ class _r_doctorState extends State<r_doctor> {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 50,
               ),
               SizedBox(
-                width: 250,
+                width: 200,
                 height: 40,
                 child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(defultColor2)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const login()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const d_login(),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Sign up',
@@ -199,7 +203,7 @@ class _r_doctorState extends State<r_doctor> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const login()));
+                                builder: (context) => const d_login()));
                       },
                       child: const Text(
                         'Log In',

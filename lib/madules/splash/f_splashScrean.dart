@@ -89,7 +89,10 @@ class f_splashScrean extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => s_splashScrean()));
               },
               backgroundColor: defultColor,
-              child: const Icon(Icons.arrow_forward),
+              child: const Icon(
+                Icons.arrow_forward,
+                color: Colors.white,
+              ),
             ),
           ),
           Positioned(

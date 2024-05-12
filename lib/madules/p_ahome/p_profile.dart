@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 import '../../shared/componente.dart';
 
-class p_profile extends StatefulWidget {
-  const p_profile({super.key});
+class p_aprofile extends StatefulWidget {
+  const p_aprofile({super.key});
 
   @override
-  State<p_profile> createState() => _p_profileState();
+  State<p_aprofile> createState() => _p_aprofileState();
 }
 
-class _p_profileState extends State<p_profile> {
+class _p_aprofileState extends State<p_aprofile> {
   final TextEditingController _textEditingController = TextEditingController();
   final TextEditingController _phoneEditingController = TextEditingController();
   final TextEditingController _passwordEditingController =

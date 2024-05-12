@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-
 import '../../shared/componente.dart';
 import 'f_splashScrean.dart';
 
@@ -27,7 +26,10 @@ class SplashScreen extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [const SizedBox(height: 16.0), Center(child: logo)],
+            children: [
+              const SizedBox(height: 16.0),
+              Center(child: logo),
+            ],
           ),
         ),
       ),

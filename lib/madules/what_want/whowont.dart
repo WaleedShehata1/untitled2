@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/componente.dart';
-import '../p_ahome/p_abox.dart';
+
+import '../p_ahome/p_dbox.dart';
 import '../p_dhome/p_dbox.dart';
 
 class whowant extends StatelessWidget {
@@ -26,14 +27,17 @@ class whowant extends StatelessWidget {
                   color: defultColor2,
                   fontWeight: FontWeight.bold),
               children: <TextSpan>[
-                TextSpan(text: 'S'),
+                TextSpan(
+                  text: 'S',
+                  style: TextStyle(color: Colors.white),
+                ),
                 TextSpan(
                   text: 'O',
                   style: TextStyle(color: Colors.white),
                 ),
                 TextSpan(
                   text: 'S',
-                  style: TextStyle(color: defultColor2),
+                  style: TextStyle(color: Colors.white),
                 ),
               ],
             ),
@@ -95,7 +99,7 @@ class _ChoiceBoxState extends State<ChoiceBox> {
         widget.onPressed(); // استدعاء الدالة onPressed الخاصة بالـ ChoiceBox
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: defultColor2, // تحديد لون الـ ChoiceBox
+        backgroundColor: Colors.white, // تحديد لون الـ ChoiceBox
       ),
       child: Container(
         width: 200,

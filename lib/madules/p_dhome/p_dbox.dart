@@ -41,24 +41,27 @@ class _p_dboxState extends State<p_dbox> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Colors.white30,
+            backgroundColor: Colors.white,
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            backgroundColor: Colors.white30,
+            backgroundColor: Colors.white,
             icon: Icon(Icons.location_on),
             label: 'Map',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(Icons.person),
             label: 'Prfile',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(Icons.notifications),
             label: 'Notification',
           ),
           BottomNavigationBarItem(
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.help_outline,
             ),
@@ -66,9 +69,9 @@ class _p_dboxState extends State<p_dbox> {
           ),
         ],
         currentIndex: _selectedIndex,
-        backgroundColor: defultColor,
-        selectedItemColor: defultColor2,
-        unselectedItemColor: Colors.white30,
+        backgroundColor: Colors.red,
+        selectedItemColor: defultColor,
+        unselectedItemColor: defultColor2,
         onTap: _onItemTapped,
       ),
     );

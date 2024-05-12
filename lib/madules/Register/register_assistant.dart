@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/componente.dart';
-import '../Login/p_Login.dart';
+import '../Login/a_Login.dart';
 
 class r_assistant extends StatelessWidget {
   const r_assistant({super.key});
@@ -118,8 +118,10 @@ class r_assistant extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.white)),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const login()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const a_login()));
                   },
                   child: const Text(
                     'Sign Up',
@@ -137,9 +139,11 @@ class r_assistant extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const login()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const a_login(),
+                          ),
+                        );
                       },
                       child: const Text(
                         'Log In',
