@@ -9,6 +9,7 @@ import '../Register/who.dart';
 import 'f_splashScrean.dart';
 
 class s_splashScrean extends StatelessWidget {
+  static String id = "s_splashScrean";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

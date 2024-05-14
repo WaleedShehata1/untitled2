@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
-
+  static const String id = "OnBoarding";
   @override
   State<OnBoarding> createState() => _OnBoardingState();
 }

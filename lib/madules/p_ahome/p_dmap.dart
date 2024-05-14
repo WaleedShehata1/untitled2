@@ -26,7 +26,8 @@ class _p_amapState extends State<p_amap> {
   final Set<Marker> markers = Set();
   static Position? position;
   static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(position!.latitude, position!.longitude),
+    // target: LatLng(position!.latitude, position!.longitude),
+    target: LatLng(31.346952, 30.536145),
     zoom: 8.4746,
   );
 
@@ -46,8 +47,8 @@ class _p_amapState extends State<p_amap> {
 
   Widget _customMarkerWidget(String url) {
     return SizedBox(
-      width: 50, // Specify a fixed size for testing
-      height: 50,
+      width: 100, // Specify a fixed size for testing
+      height: 100,
       child: Image.asset(url, fit: BoxFit.fill),
     );
   }
@@ -67,7 +68,8 @@ class _p_amapState extends State<p_amap> {
 
   addMarket() async {
     for (Market market in market) {
-      final customMarkerBytes = await _convertWidgetToBytes(market.image!);
+      final customMarkerBytes =
+          await _convertWidgetToBytes("assets/images/doctor.png");
       final customMarkerIcon = BitmapDescriptor.fromBytes(customMarkerBytes!);
       markers.add(
         Marker(
@@ -88,9 +90,10 @@ class _p_amapState extends State<p_amap> {
     }
   }
 
-  addMarketHospital() async {
+  addMarketAssistant() async {
     for (Market market in marketHospital) {
-      final customMarkerBytes = await _convertWidgetToBytes(market.image!);
+      final customMarkerBytes =
+          await _convertWidgetToBytes("assets/images/secretary.png");
       final customMarkerIcon = BitmapDescriptor.fromBytes(customMarkerBytes!);
       markers.add(
         Marker(
@@ -182,16 +185,16 @@ class _p_amapState extends State<p_amap> {
                     ),
                   ),
                 ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: SearchLocationWidget(
-              mapController: _mapController,
-              pickedAddress: 'ابحث عن أقرب طوارئ/دكتور/مستشفي لك',
-              isEnabled: null,
-              fromDialog: false,
-              hint: 'l,ru;',
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(15.0),
+          //   child: SearchLocationWidget(
+          //     mapController: _mapController,
+          //     pickedAddress: 'ابحث عن أقرب طوارئ/دكتور/مستشفي لك',
+          //     isEnabled: null,
+          //     fromDialog: false,
+          //     hint: 'l,ru;',
+          //   ),
+          // ),
           Positioned(
             bottom: 50,
             left: 50,
@@ -218,7 +221,7 @@ class _p_amapState extends State<p_amap> {
                         Row(
                           children: [
                             Radio(
-                              value: 'دكتور',
+                              value: 'Doctor',
                               activeColor: Colors.cyan,
                               groupValue: val,
                               onChanged: (value) async {
@@ -229,13 +232,13 @@ class _p_amapState extends State<p_amap> {
                                 await addMarket();
                               },
                             ),
-                            const Text('دكتور')
+                            const Text('Doctor')
                           ],
                         ),
                         Row(
                           children: [
                             Radio(
-                              value: 'مستشفي',
+                              value: 'Assistant',
                               activeColor: Colors.cyan,
                               groupValue: val,
                               onChanged: (value) async {
@@ -243,32 +246,12 @@ class _p_amapState extends State<p_amap> {
                                   val = value;
                                   markers.clear();
                                 });
-                                await addMarketHospital();
+                                await addMarketAssistant();
                               },
                             ),
-                            const Text('مستشفي')
+                            const Text('Assistant')
                           ],
                         ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            Radio(
-                              value: 'طوارئ',
-                              activeColor: Colors.cyan,
-                              groupValue: val,
-                              onChanged: (value) {
-                                setState(() {
-                                  val = value;
-                                  markers.clear();
-                                });
-                              },
-                            ),
-                            const Text('طوارئ')
-                          ],
-                        )
                       ],
                     ),
                   ],

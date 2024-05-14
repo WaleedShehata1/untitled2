@@ -7,7 +7,7 @@ import '../Login/d_Login.dart';
 
 class r_doctor extends StatefulWidget {
   const r_doctor({super.key});
-
+  static const String id = "r_doctor";
   @override
   State<r_doctor> createState() => _r_doctorState();
 }
@@ -97,7 +97,12 @@ class _r_doctorState extends State<r_doctor> {
                       )),
                 ),
               ),
-              const SizedBox(height: 75, child: PasswordTextField()),
+              SizedBox(
+                  height: 75,
+                  child: PasswordTextField(
+                    controller: null,
+                    validator: (value) {},
+                  )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(

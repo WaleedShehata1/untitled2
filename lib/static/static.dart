@@ -18,21 +18,21 @@ List market = [
       lat: 31.345692,
       long: 30.437645,
       title: 'Dr,Ali ahmed',
-      image: 'assets/images/personIcon.png',
+      image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
   Market(
       id: '2',
       lat: 31.346952,
       long: 30.536145,
       title: 'Dr,Ali ahmed',
-      image: 'assets/images/personIcon.png',
+      image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
   Market(
       id: '3',
       lat: 31.454192,
       long: 30.737145,
       title: 'Dr,Ali ahmed',
-      image: 'assets/images/personIcon.png',
+      image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
 ];
 List marketHospital = [
@@ -41,20 +41,20 @@ List marketHospital = [
       lat: 31.345692,
       long: 30.437645,
       title: 'El_Nobaria',
-      image: 'assets/images/hospital.png',
+      image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
   Market(
       id: '2',
       lat: 31.346952,
       long: 30.536145,
       title: 'El_Nobaria',
-      image: 'assets/images/hospital.png',
+      image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
   Market(
       id: '3',
       lat: 31.454192,
       long: 30.737145,
       title: 'El_Nobaria',
-      image: 'assets/images/hospital.png',
+      image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
 ];

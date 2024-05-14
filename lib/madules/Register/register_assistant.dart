@@ -7,7 +7,7 @@ import '../Login/a_Login.dart';
 
 class r_assistant extends StatelessWidget {
   const r_assistant({super.key});
-
+  static const String id = "r_assistant";
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -91,7 +91,10 @@ class r_assistant extends StatelessWidget {
                   ),
                 ),
               ),
-              const PasswordTextField(),
+              PasswordTextField(
+                controller: null,
+                validator: (value) {},
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: 15, right: 15, top: 5, bottom: 20),

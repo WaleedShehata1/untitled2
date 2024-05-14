@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_collection_literals
+// ignore_for_file: prefer_collection_literals, camel_case_types
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';

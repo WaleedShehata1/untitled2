@@ -9,7 +9,9 @@ import '../assistant/assistant.dart';
 
 class a_login extends StatelessWidget {
   const a_login({super.key});
-
+  static const String id = "a_login";
+// TextEditingController name;
+// TextEditingController
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +39,8 @@ class a_login extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            child: TextField(
+            child: TextFormField(
+              // controller: ,
               keyboardType: TextInputType.emailAddress,
               style: const TextStyle(color: Colors.black),
               decoration: InputDecoration(
@@ -55,7 +58,10 @@ class a_login extends StatelessWidget {
               ),
             ),
           ),
-          const PasswordTextField(),
+          PasswordTextField(
+            controller: null,
+            validator: (value) {},
+          ),
           Row(
             // mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.end,

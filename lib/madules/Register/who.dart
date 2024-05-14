@@ -30,7 +30,7 @@ class _whoscreanState extends State<whoscrean> {
     } else if (_selectedItem == 'Patient') {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const r_patient()),
+        MaterialPageRoute(builder: (context) => r_patient()),
       );
     }
   }

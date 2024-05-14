@@ -9,7 +9,7 @@ import '../what_want/whowont.dart';
 
 class login extends StatelessWidget {
   const login({super.key});
-
+  static const String id = "login";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,10 @@ class login extends StatelessWidget {
                   ),
                 ),
               ),
-              const PasswordTextField(),
+              PasswordTextField(
+                controller: null,
+                validator: (value) {},
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

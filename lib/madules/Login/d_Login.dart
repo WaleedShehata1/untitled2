@@ -9,7 +9,7 @@ import '../doctor/doctor.dart';
 
 class d_login extends StatelessWidget {
   const d_login({super.key});
-
+  static const String id = "d_login";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +55,10 @@ class d_login extends StatelessWidget {
               ),
             ),
           ),
-          const PasswordTextField(),
+          PasswordTextField(
+            controller: null,
+            validator: (value) {},
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -5,8 +5,8 @@ import '../../shared/componente.dart';
 import 'f_splashScrean.dart';
 
 class SplashScreen extends StatelessWidget {
+  static String id = "SplashScreen";
   const SplashScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
