@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:untitled/const/images/image.dart';
 import 'package:untitled/madules/splash/s_splashScreans.dart';
 import 'package:untitled/madules/splash/th_splashScrean.dart';
-
 import '../../shared/componente.dart';
 import '../Register/who.dart';
 

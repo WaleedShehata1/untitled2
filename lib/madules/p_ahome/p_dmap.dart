@@ -41,6 +41,7 @@ class _p_amapState extends State<p_amap> {
 
   @override
   void initState() {
+    addMarket();
     getMyCurrentLocation();
     super.initState();
   }
@@ -70,30 +71,6 @@ class _p_amapState extends State<p_amap> {
     for (Market market in market) {
       final customMarkerBytes =
           await _convertWidgetToBytes("assets/images/doctor.png");
-      final customMarkerIcon = BitmapDescriptor.fromBytes(customMarkerBytes!);
-      markers.add(
-        Marker(
-          markerId: MarkerId(market.id!),
-          position: LatLng(market.long!, market.lat!),
-          infoWindow: InfoWindow(
-              title: market.title!,
-              onTap: () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=> ClinicProfileMap()));
-                return _showCustomInfoWindow(
-                    market.title!, market.description!);
-              }),
-          icon: customMarkerIcon,
-        ),
-      );
-
-      setState(() {});
-    }
-  }
-
-  addMarketAssistant() async {
-    for (Market market in marketHospital) {
-      final customMarkerBytes =
-          await _convertWidgetToBytes("assets/images/secretary.png");
       final customMarkerIcon = BitmapDescriptor.fromBytes(customMarkerBytes!);
       markers.add(
         Marker(
@@ -195,70 +172,43 @@ class _p_amapState extends State<p_amap> {
           //     hint: 'l,ru;',
           //   ),
           // ),
-          Positioned(
-            bottom: 50,
-            left: 50,
-            child: Container(
-              height: 110,
-              width: 200,
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.5),
-                  borderRadius: BorderRadius.circular(16),
-                  border: const Border(
-                    bottom: BorderSide(color: Colors.blue, width: 2),
-                    top: BorderSide(color: Colors.blue, width: 2),
-                    right: BorderSide(color: Colors.blue, width: 2),
-                    left: BorderSide(color: Colors.blue, width: 2),
-                  )),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Radio(
-                              value: 'Doctor',
-                              activeColor: Colors.cyan,
-                              groupValue: val,
-                              onChanged: (value) async {
-                                setState(() {
-                                  val = value;
-                                  markers.clear();
-                                });
-                                await addMarket();
-                              },
-                            ),
-                            const Text('Doctor')
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                              value: 'Assistant',
-                              activeColor: Colors.cyan,
-                              groupValue: val,
-                              onChanged: (value) async {
-                                setState(() {
-                                  val = value;
-                                  markers.clear();
-                                });
-                                await addMarketAssistant();
-                              },
-                            ),
-                            const Text('Assistant')
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
+          // Positioned(
+          //   bottom: 50,
+          //   left: 50,
+          //   child: Container(
+          //     height: 110,
+          //     width: 200,
+          //     decoration: BoxDecoration(
+          //         color: Colors.white.withOpacity(.5),
+          //         borderRadius: BorderRadius.circular(16),
+          //         border: const Border(
+          //           bottom: BorderSide(color: Colors.blue, width: 2),
+          //           top: BorderSide(color: Colors.blue, width: 2),
+          //           right: BorderSide(color: Colors.blue, width: 2),
+          //           left: BorderSide(color: Colors.blue, width: 2),
+          //         )),
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 7),
+          //       child: Row(
+          //         children: [
+          //           Radio(
+          //             value: 'Doctor',
+          //             activeColor: Colors.cyan,
+          //             groupValue: val,
+          //             onChanged: (value) async {
+          //               setState(() {
+          //                 val = value;
+          //                 markers.clear();
+          //               });
+          //               await addMarket();
+          //             },
+          //           ),
+          //           const Text('Doctor')
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

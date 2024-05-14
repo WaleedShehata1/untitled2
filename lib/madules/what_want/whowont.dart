@@ -9,6 +9,7 @@ import '../p_dhome/p_dbox.dart';
 
 class whowant extends StatelessWidget {
   const whowant({super.key});
+  static const String id = "whowant";
 
   @override
   Widget build(BuildContext context) {

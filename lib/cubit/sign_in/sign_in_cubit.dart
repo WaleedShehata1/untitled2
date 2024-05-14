@@ -51,9 +51,12 @@ class SignInCubit extends Cubit<SignInStates> {
         showSnackbar(context, 'Wrong password provided for that user.');
         print('Wrong password provided for that user.');
         emit(SignInErrorState('Wrong password provided for that user.'));
+      } else {
+        print('${e.message}');
       }
     } catch (ex) {
-      showSnackbar(context, 'there was an error');
+      showSnackbar(context, 'there was an error== ${ex.toString()}');
+      print('there was an error== ${ex.toString()}');
     }
     isLoading = false;
   }

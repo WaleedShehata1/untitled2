@@ -1,8 +1,6 @@
 // ignore_for_file: camel_case_types, file_names
-
 import 'package:flutter/material.dart';
 import 'package:untitled/madules/splash/s_splashScreans.dart';
-
 import '../../const/images/image.dart';
 import '../../shared/componente.dart';
 import '../Register/who.dart';

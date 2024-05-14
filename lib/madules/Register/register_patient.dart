@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, avoid_types_as_parameter_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -15,6 +17,7 @@ class r_patient extends StatelessWidget {
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
   var passwordController = TextEditingController();
+  var addressController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -33,147 +36,192 @@ class r_patient extends StatelessWidget {
                   elevation: 0,
                 ),
                 body: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      logo,
-                      const Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text(
-                            'creating an account',
-                            style: TextStyle(color: Colors.white, fontSize: 30),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: TextFormField(
-                          validator: (date) {
-                            if (date!.trim().isEmpty) {
-                              return 'Enter your Name ';
-                            }
-                          },
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
-                            labelStyle: TextStyle(color: Colors.grey[600]),
-                            labelText: 'Full name',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        logo,
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text(
+                              'creating an account',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 30),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: TextFormField(
-                          validator: (date) {
-                            if (date!.trim().isEmpty) {
-                              return 'Enter your email ';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: TextFormField(
+                            controller: nameController,
+                            validator: (date) {
+                              if (date!.trim().isEmpty) {
+                                return 'Enter your Name ';
+                              }
+                            },
+                            style: const TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 15.0, horizontal: 15.0),
                               labelStyle: TextStyle(color: Colors.grey[600]),
-                              labelText: 'Valid email',
+                              labelText: 'Full name',
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                              )),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: TextFormField(
-                          validator: (date) {
-                            if (date!.trim().isEmpty) {
-                              return 'Phone number ';
-                            }
-                          },
-                          keyboardType: TextInputType.number,
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: TextFormField(
+                            controller: addressController,
+                            validator: (date) {
+                              if (date!.trim().isEmpty) {
+                                return 'Enter your address ';
+                              }
+                            },
+                            style: const TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 15.0, horizontal: 15.0),
                               labelStyle: TextStyle(color: Colors.grey[600]),
-                              labelText: 'Phone number',
+                              labelText: 'Address',
                               filled: true,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
-                              )),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          height: 75,
-                          child: PasswordTextField(
-                            validator: (value) {
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: TextFormField(
+                            controller: emailController,
+                            validator: (date) {
+                              if (date!.trim().isEmpty) {
+                                return 'Enter your email ';
+                              }
                               return null;
                             },
-                            controller: null,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: SizedBox(
-                          width: 250,
-                          height: 40,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white)),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const login()));
+                            keyboardType: TextInputType.emailAddress,
+                            style: const TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 15.0, horizontal: 15.0),
+                                labelStyle: TextStyle(color: Colors.grey[600]),
+                                labelText: 'Valid email',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: TextFormField(
+                            controller: phoneController,
+                            validator: (date) {
+                              if (date!.trim().isEmpty) {
+                                return 'Phone number ';
+                              }
                             },
-                            child: const Text(
-                              'Sign Up',
-                              style: TextStyle(color: defultColor),
+                            keyboardType: TextInputType.number,
+                            style: const TextStyle(color: Colors.black),
+                            decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 15.0, horizontal: 15.0),
+                                labelStyle: TextStyle(color: Colors.grey[600]),
+                                labelText: 'Phone number',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                            height: 75,
+                            child: PasswordTextField(
+                              validator: (value) {
+                                if (value!.trim().isEmpty) {
+                                  return 'Enter your Password';
+                                } else if (value.length < 8) {
+                                  return 'The password is less than 8 numbers';
+                                }
+                                return null;
+                              },
+                              controller: passwordController,
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: SizedBox(
+                            width: 250,
+                            height: 40,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white),
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  RegisterCubit.get(context).userSignUp(
+                                    password: passwordController.text,
+                                    email: emailController.text,
+                                    userName: nameController.text,
+                                    phone: phoneController.text,
+                                    collection: "patients",
+                                    context: context,
+                                    address: addressController.text,
+                                    routeName: login.id,
+                                  );
+                                }
+                                if (kDebugMode) {
+                                  print('Done');
+                                }
+                              },
+                              child: const Text(
+                                'Sign Up',
+                                style: TextStyle(color: defultColor),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Already a member?',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255)),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const login()));
-                              },
-                              child: const Text(
-                                'Log In',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
-                              ))
-                        ],
-                      )
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Already a member?',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const login()));
+                                },
+                                child: const Text(
+                                  'Log In',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(255, 255, 255, 1)),
+                                ))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 backgroundColor: defultColor,

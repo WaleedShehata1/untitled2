@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:untitled/madules/splash/th_splashScrean.dart';
-
 import '../../const/images/image.dart';
 import '../../shared/componente.dart';
 import '../Register/who.dart';

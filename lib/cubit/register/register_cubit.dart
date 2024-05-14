@@ -3,9 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/helper/snackBar.dart';
+import 'package:untitled/madules/Login/p_Login.dart';
 
-import '../../helper/snackBar.dart';
 import '../../models/user_model.dart';
+
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
@@ -32,21 +34,22 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   void userCreate({
-    required String name,
+    required String userName,
     required String phone,
     required String email,
     required String uId,
     required String address,
+    required String collection,
   }) {
     UserModel model = UserModel(
       email: email,
       phone: phone,
-      name: name,
+      name: userName,
       uId: uId,
       address: address,
     );
     FirebaseFirestore.instance
-        .collection('patients')
+        .collection(collection)
         .doc(uId)
         .set(model.toFireStore())
         .then((value) {
@@ -57,14 +60,15 @@ class RegisterCubit extends Cubit<RegisterState> {
     });
   }
 
-  void userSignUp({
+  Future<void> userSignUp({
     required String password,
     required String email,
-    required String name,
+    required String userName,
     required String phone,
     required String address,
-    required BuildContext context,
+    required String collection,
     required String routeName,
+    required BuildContext context,
   }) async {
     isLoading = true;
     try {
@@ -75,10 +79,11 @@ class RegisterCubit extends Cubit<RegisterState> {
           )
           .then((value) => {
                 userCreate(
+                  userName: userName,
                   phone: phone,
                   email: email,
                   uId: value.user!.uid,
-                  name: name,
+                  collection: collection,
                   address: address,
                 ),
                 showSnackbar(context, 'Success'),
@@ -86,7 +91,7 @@ class RegisterCubit extends Cubit<RegisterState> {
                 Navigator.pushReplacementNamed(context, routeName)
               })
           .catchError((error) {
-        emit(RegisterErrorState(error: error.toString()));
+        emit(RegisterErrorState(error.toString()));
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -95,10 +100,10 @@ class RegisterCubit extends Cubit<RegisterState> {
       } else if (e.code == 'email-already-in-use') {
         showSnackbar(context, 'The account already exists for that email.');
         print('The account already exists for that email.');
+      } else {
+        showSnackbar(context, e.toString());
+        print("===${e.toString()}");
       }
-    } catch (e) {
-      showSnackbar(context, e.toString());
-      print(e);
     }
     isLoading = false;
   }

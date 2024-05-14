@@ -9,6 +9,7 @@ import 'aprofile.dart';
 
 class assistant extends StatefulWidget {
   const assistant({super.key});
+  static const String id = "assistant";
 
   @override
   State<assistant> createState() => _assistantState();

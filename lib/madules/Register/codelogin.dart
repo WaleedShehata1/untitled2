@@ -52,24 +52,26 @@ class codescrean extends StatelessWidget {
           ),
           Center(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      color: Colors.green,
-                    ),
-                    height: 50,
-                    width: 50.0,
-                    child: const TextField(
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      style: TextStyle(fontSize: 24.0, color: Colors.white),
-                      decoration: InputDecoration(
-                        counterText: "",
-                        border: OutlineInputBorder(),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                  ),
+                  height: 50,
+                  width: 50.0,
+                  child: const TextField(
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    maxLength: 1,
+                    style: TextStyle(fontSize: 24.0, color: Colors.white),
+                    decoration: InputDecoration(
+                      counterText: "",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
                       ),
                     ),
                   ),
@@ -78,8 +80,8 @@ class codescrean extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
                     ),
                     height: 50,
                     width: 50.0,
@@ -90,7 +92,11 @@ class codescrean extends StatelessWidget {
                       style: TextStyle(fontSize: 24.0, color: Colors.white),
                       decoration: InputDecoration(
                         counterText: "",
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -99,8 +105,8 @@ class codescrean extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 25),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
                     ),
                     height: 50,
                     width: 50.0,
@@ -111,7 +117,11 @@ class codescrean extends StatelessWidget {
                       style: TextStyle(fontSize: 24.0, color: Colors.white),
                       decoration: InputDecoration(
                         counterText: "",
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -120,8 +130,8 @@ class codescrean extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      color: Colors.green,
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
                     ),
                     height: 50,
                     width: 50.0,
@@ -132,7 +142,11 @@ class codescrean extends StatelessWidget {
                       style: TextStyle(fontSize: 24.0, color: Colors.white),
                       decoration: InputDecoration(
                         counterText: "",
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -141,14 +155,14 @@ class codescrean extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
           SizedBox(
-            width: 250,
+            width: 240,
             height: 40,
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
                 Navigator.push(

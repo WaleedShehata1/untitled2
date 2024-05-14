@@ -10,7 +10,7 @@ import 'dmessages.dart';
 
 class doctor extends StatefulWidget {
   const doctor({super.key});
-
+  static const String id = "doctor";
   @override
   State<doctor> createState() => _doctorState();
 }

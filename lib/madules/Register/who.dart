@@ -1,10 +1,8 @@
 // ignore_for_file: camel_case_types
-
 import 'package:flutter/material.dart';
 import 'package:untitled/madules/Register/register_assistant.dart';
 import 'package:untitled/madules/Register/register_doctor.dart';
 import 'package:untitled/madules/Register/register_patient.dart';
-
 import '../../shared/componente.dart';
 
 class whoscrean extends StatefulWidget {
