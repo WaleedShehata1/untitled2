@@ -1,17 +1,15 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names
 
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:untitled/madules/what_want/whowont.dart';
-
+import 'package:path/path.dart' as p;
 import '../../cubit/update_profile/update_profile_cubit.dart';
 import '../../helper/shared.dart';
-import '../../models/user_model.dart';
 import '../../shared/componente.dart';
+import '../../madules/Register/who.dart';
 
 class p_profile extends StatefulWidget {
   const p_profile({super.key});
@@ -27,19 +25,45 @@ class _p_profileState extends State<p_profile> {
       TextEditingController();
   final TextEditingController _emailEditingController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
 
+  File? pickImage;
+
+  String imageUrl = '';
   File? _image;
   bool _isEditing = false;
   XFile? image;
+
+  fetchImage() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return null;
+    }
+    setState(() {
+      pickImage = File(image.path);
+    });
+    print("${pickImage?.path}");
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child("images");
+    Reference referenceImagesToUpload =
+        referenceDirImages.child(p.basename(pickImage!.path));
+    try {
+      await referenceImagesToUpload.putFile(pickImage!);
+      imageUrl = await referenceImagesToUpload.getDownloadURL();
+    } catch (e) {
+      print("error=${e.toString()}---$e");
+    }
+    print("imageUrl=$imageUrl");
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UpdateProfileCubit(),
+      create: (context) => UpdateProfileCubit()..getdate(),
       child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) {},
         builder: (context, state) {
+          print("aaa${UpdateProfileCubit().dataUser.toString()}");
           return Scaffold(
             appBar: AppBar(
               actions: [
@@ -84,7 +108,7 @@ class _p_profileState extends State<p_profile> {
                         ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: pickImage,
+                    onPressed: fetchImage,
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.grey)),
@@ -224,7 +248,7 @@ class _p_profileState extends State<p_profile> {
                         backgroundColor: defultColor,
                       ),
                       onPressed: () {
-                        Navigator.pushReplacementNamed(context, whowant.id)
+                        Navigator.pushReplacementNamed(context, whoscrean.id)
                             .then((value) => CacheHelper.clearData(
                                   key: 'token',
                                 ));
@@ -242,24 +266,6 @@ class _p_profileState extends State<p_profile> {
         },
       ),
     );
-  }
-
-  void pickImage() async {
-    var images = await ImagePicker().pickImage(source: ImageSource.camera);
-    setState(() {
-      image = images;
-    });
-    print(image!.path);
-    print(image!.name);
-    uploadImage();
-  }
-
-  void uploadImage() async {
-    final FirebaseStorage fStorage =
-        FirebaseStorage.instanceFor(bucket: "gs://sos1-84fac.appspot.com");
-    var ref = fStorage.ref("${token}.jpg");
-    ref.putFile(File(image!.path));
-    print("${token}.jpg");
   }
 
   // Future<void> _pickImage() async {

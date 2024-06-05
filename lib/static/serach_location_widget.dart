@@ -27,11 +27,7 @@ class SearchLocationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // LocationSearchDialog(
-        //       mapController: mapController, isPickedUp: isPickedUp);
-        if (isEnabled != null) {
-          // Get.find<ParcelController>().setIsPickedUp(isPickedUp, true);
-        }
+        if (isEnabled != null) {}
       },
       child: Container(
         height: 50,

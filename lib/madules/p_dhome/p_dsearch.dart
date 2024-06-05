@@ -10,6 +10,7 @@ import 'package:untitled/helper/shared.dart';
 import 'package:untitled/models/doctor_model.dart';
 
 import '../../cubit/register/register_cubit.dart';
+import '../../cubit/update_profile/update_profile_cubit.dart';
 import '../../shared/componente.dart';
 import 'widget/doctors_card.dart';
 import 'widget/filter_dialog.dart';
@@ -40,107 +41,124 @@ class _p_dsearchState extends State<p_dsearch> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-        future: doctorsFireStore.get(),
-        builder: (context, snapshot) {
-          return Scaffold(
-            appBar: AppBar(
-              actions: [
-                SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: logo,
-                    ))
-              ],
-              backgroundColor: Colors.white54,
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  color: defultColor),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: 'Search for the doctor\'s name',
-                            hintStyle: TextStyle(color: defultColor),
-                            prefixIcon: Icon(Icons.search, color: defultColor),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              searchValue = value;
-                            });
-                          },
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.filter_alt),
-                        color: defultColor,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return FilterDialog(
-                                locations: const [
-                                  'Cairo',
-                                  'Alexandria',
-                                  'Aswan',
-                                  'Elshorouk',
-                                ],
-                                specialties: const [
-                                  'General Doctor',
-                                  'obstetrics and gynecology',
-                                  'Neurologists',
-                                  'onram',
-                                ],
-                                onFilterChanged: (location, specialty) {
-                                  setState(() {
-                                    selectedLocation = location;
-
-                                    selectedSpecialty = specialty;
-                                  });
-                                  Navigator.pop(context);
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
+    return BlocProvider(
+      create: (context) => UpdateProfileCubit(),
+      child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return FutureBuilder<QuerySnapshot>(
+              future: doctorsFireStore.get(),
+              builder: (context, snapshot) {
+                return Scaffold(
+                  appBar: AppBar(
+                    actions: [
+                      SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: logo,
+                          ))
                     ],
+                    backgroundColor: Colors.white54,
+                    automaticallyImplyLeading: false,
+                    leading: IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        color: defultColor),
                   ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: snapshot.hasData
-                        ? ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) {
-                              return DoctorCard(
-                                ctx: context,
-                                doctor:
-                                    Doctor.formJson(snapshot.data!.docs[index]),
-                                doctorId: snapshot.data!.docs.first.id,
-                              );
-                            },
-                          )
-                        : Center(
-                            child: Text("${snapshot.error}"),
-                          ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                decoration: const InputDecoration(
+                                  hintText: 'Search for the doctor\'s name',
+                                  hintStyle: TextStyle(color: defultColor),
+                                  prefixIcon:
+                                      Icon(Icons.search, color: defultColor),
+                                ),
+                                onChanged: (value) {
+                                  setState(() {
+                                    searchValue = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.filter_alt),
+                              color: defultColor,
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return FilterDialog(
+                                      locations: const [
+                                        'Cairo',
+                                        'Alexandria',
+                                        'Aswan',
+                                        'Elshorouk',
+                                      ],
+                                      specialties: const [
+                                        'General Doctor',
+                                        'obstetrics and gynecology',
+                                        'Neurologists',
+                                        'onram',
+                                      ],
+                                      onFilterChanged: (location, specialty) {
+                                        setState(() {
+                                          selectedLocation = location;
+
+                                          selectedSpecialty = specialty;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Expanded(
+                          child: snapshot.hasData
+                              ? ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    if ((snapshot.data!.docs[index]
+                                                ['userName'] ==
+                                            searchValue) ||
+                                        searchValue.isEmpty) {
+                                      return DoctorCard(
+                                        doctor: Doctor.formJson(
+                                            snapshot.data!.docs[index]),
+                                        doctorId: snapshot.data!.docs.first.id,
+                                        isDoctor: true,
+                                      );
+                                    }
+                                    return null;
+                                  },
+                                )
+                              : Center(
+                                  child: Text("${snapshot.error}"),
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          );
-        });
+                );
+              });
+        },
+      ),
+    );
   }
 }

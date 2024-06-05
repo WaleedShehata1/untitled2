@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubit/register/register_cubit.dart';
+import '../../../cubit/update_profile/update_profile_cubit.dart';
 import '../../../helper/shared.dart';
 import '../../../models/doctor_model.dart';
 import '../../../shared/componente.dart';
@@ -10,19 +11,39 @@ import '../../../shared/componente.dart';
 class DoctorCard extends StatelessWidget {
   final Doctor doctor;
   final String doctorId;
-  final BuildContext ctx;
+  final bool isDoctor;
+
   const DoctorCard({
     super.key,
     required this.doctor,
     required this.doctorId,
-    required this.ctx,
+    required this.isDoctor,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     var addressController = TextEditingController();
     var messageController = TextEditingController();
     var formKey = GlobalKey<FormState>();
+    sendRequest() {
+      if (isDoctor == true) {
+        UpdateProfileCubit.get(ctx).requestDoctors(
+          userId: token!,
+          doctorId: doctorId,
+          address: addressController.text,
+          message: messageController.text,
+          state: 'wating',
+        );
+      } else {
+        UpdateProfileCubit.get(ctx).requestAssistant(
+          userId: token!,
+          assistantId: doctorId,
+          address: addressController.text,
+          message: messageController.text,
+          state: 'wating',
+        );
+      }
+    }
 
     print(doctor.imageUrl);
     return Container(
@@ -95,7 +116,7 @@ class DoctorCard extends StatelessWidget {
                             onPressed: () {
                               // عرض مربع حوار لإدخال البيانات
                               showDialog(
-                                context: context,
+                                context: ctx,
                                 builder: (context) {
                                   return AlertDialog(
                                     title: const Text(
@@ -144,15 +165,7 @@ class DoctorCard extends StatelessWidget {
                                           // يمكنك القيام بالإجراءات المناسبة هنا
                                           if (formKey.currentState!
                                               .validate()) {
-                                            RegisterCubit.get(ctx)
-                                                .requestDoctors(
-                                                    userId: 'sdxcsdsdsd',
-                                                    doctorId: 'sdsdsdsd',
-                                                    address:
-                                                        addressController.text,
-                                                    message:
-                                                        messageController.text,
-                                                    state: 'wating');
+                                            sendRequest();
                                             Navigator.of(context).pop();
 
                                             /// address

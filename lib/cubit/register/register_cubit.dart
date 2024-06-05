@@ -106,30 +106,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     isLoading = false;
   }
 
-//---------------------------------------------------------
-  void requestDoctors({
-    required String userId,
-    required String doctorId,
-    required String address,
-    required String message,
-    required String state,
-  }) {
-    RequestModelDoctor request = RequestModelDoctor(
-      userId: userId,
-      address: address,
-      doctorId: doctorId,
-      message: message,
-      state: state,
-    );
-    try {
-      FirebaseFirestore.instance
-          .collection("requests_doctor")
-          .add(request.toFireStore());
-    } catch (e) {
-      print("error request doctor = ${e.toString}");
-    }
-  }
-
 // --------------------------------------------------------
   Future<void> doctorsCreate({
     required String userName,

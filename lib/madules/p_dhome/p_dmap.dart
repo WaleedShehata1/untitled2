@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_collection_literals, camel_case_types
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
@@ -24,6 +25,7 @@ class _p_dmapState extends State<p_dmap> {
 
   final Set<Marker> markers = Set();
   static Position? position;
+  static Position? positionSearch;
   static final CameraPosition _kGooglePlex = CameraPosition(
     // target: LatLng(position!.latitude, position!.longitude),
     target: LatLng(31.346952, 30.536145),
@@ -67,27 +69,37 @@ class _p_dmapState extends State<p_dmap> {
   }
 
   addMarketAssistant() async {
-    for (Market market in marketHospital) {
-      final customMarkerBytes =
-          await _convertWidgetToBytes("assets/images/secretary.png");
-      final customMarkerIcon = BitmapDescriptor.fromBytes(customMarkerBytes!);
-      markers.add(
-        Marker(
-          markerId: MarkerId(market.id!),
-          position: LatLng(market.long!, market.lat!),
-          infoWindow: InfoWindow(
-              title: market.title!,
-              onTap: () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=> ClinicProfileMap()));
-                return _showCustomInfoWindow(
-                    market.title!, market.description!);
-              }),
-          icon: customMarkerIcon,
-        ),
-      );
+    CollectionReference doctorsFireStore =
+        FirebaseFirestore.instance.collection('doctors_info');
+    FutureBuilder<QuerySnapshot>(
+      future: doctorsFireStore.get(),
+      builder: (context, snapshot) {
+        for (int i = 0; i < snapshot.data!.docs.length; i++) {
+          final customMarkerBytes =
+              _convertWidgetToBytes("assets/images/secretary.png");
+          final customMarkerIcon =
+              BitmapDescriptor.fromBytes(customMarkerBytes!);
+          markers.add(
+            Marker(
+              markerId: MarkerId(snapshot.data!.docs[i]["uId"]),
+              position: LatLng(
+                  snapshot.data!.docs[i]["lat"], snapshot.data!.docs[i]["log"]),
+              infoWindow: InfoWindow(
+                  title: snapshot.data!.docs[i]["userName"],
+                  onTap: () {
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=> ClinicProfileMap()));
+                    return _showCustomInfoWindow(
+                        snapshot.data!.docs[i]["userName"],
+                        snapshot.data!.docs[i]["address"]);
+                  }),
+              icon: customMarkerIcon,
+            ),
+          );
+        }
 
-      setState(() {});
-    }
+        return const SizedBox();
+      },
+    );
   }
 
   void _showCustomInfoWindow(String title, String description) {
@@ -119,19 +131,7 @@ class _p_dmapState extends State<p_dmap> {
             child: const Text('Close'),
           ),
           ElevatedButton(
-            onPressed: () {
-              if (title == 'Dr,Ali ahmed') {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => const ClinicProfileMap()));
-              } else if (title == 'El_Nobaria') {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (context) => const ClinicProfileMap2()));
-              }
-            },
+            onPressed: () {},
             child: const Text('GO'),
           ),
         ],
@@ -150,9 +150,10 @@ class _p_dmapState extends State<p_dmap> {
                   mapType: MapType.normal,
                   myLocationEnabled: true,
                   zoomControlsEnabled: false,
-                  myLocationButtonEnabled: false,
+                  myLocationButtonEnabled: true,
                   initialCameraPosition: _kGooglePlex,
                   markers: markers,
+                  onCameraMove: (position) => position,
                 )
               : Center(
                   child: Container(
