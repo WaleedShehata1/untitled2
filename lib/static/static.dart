@@ -1,3 +1,5 @@
+import 'package:geolocator/geolocator.dart';
+
 import '../const/market.dart';
 import '../const/onboarding.models.dart';
 
@@ -58,3 +60,5 @@ List marketHospital = [
       image: 'assets/images/welco.png',
       description: 'Cardiothoracic department'),
 ];
+
+Position? positionGlobly;

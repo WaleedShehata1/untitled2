@@ -1,6 +1,8 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/madules/card_requests.dart';
 
 import '../../shared/componente.dart';
 
@@ -10,99 +12,42 @@ class Messages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Mock data for demonstration
-    List<Map<String, dynamic>> friendRequests = [
-      {'name': 'Dr.hala Mohamed', 'image': 'assets/images/doctor1.jpg'},
-      {'name': 'Dr.jorg Mohamed', 'image': 'assets/images/doctor2.jpg'},
-      {'name': 'Dr.hend Mohamed', 'image': 'assets/images/doctor3.jpg'},
-    ];
+    // Mock data for demonstrationCollectionReference doctorsFireStore =
+    CollectionReference doctorsMessageFireStore =
+        FirebaseFirestore.instance.collection('requests_doctor');
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          SizedBox(
-              width: 60,
-              height: 60,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: logo,
-              ))
-        ],
-        backgroundColor: Colors.white54,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          "Messages",
-          style: TextStyle(color: defultColor, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: friendRequests.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 55,
-                          height: 55,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(friendRequests[index]['image'],
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        Column(
-                          children: [
-                            Text(friendRequests[index]['name']),
-                            Text(friendRequests[index]['name']),
-                            Text(friendRequests[index]['name']),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Rejected",
-                            style: TextStyle(
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Accepted",
-                            style: TextStyle(
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+    return FutureBuilder<QuerySnapshot>(
+        future: doctorsMessageFireStore.get(),
+        builder: (context, snapshot) {
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: logo,
+                    ))
+              ],
+              backgroundColor: Colors.white54,
+              automaticallyImplyLeading: false,
+              title: const Text(
+                "Messages",
+                style:
+                    TextStyle(color: defultColor, fontWeight: FontWeight.bold),
               ),
             ),
+            body: ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                return CardRequests(
+                  doc: snapshot.data!.docs[index]['userID'],
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
+        });
   }
 
   Color _getStatusColor(String status) {

@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'package:untitled/madules/Register/who.dart';
 import 'firebase_options.dart';
+import 'helper/shared.dart';
 import 'madules/Login/a_Login.dart';
 import 'madules/Login/d_Login.dart';
 import 'madules/Login/p_Login.dart';
+import 'madules/Register/map_gloply.dart';
 import 'madules/Register/register_assistant.dart';
 import 'madules/Register/register_doctor.dart';
 import 'madules/Register/register_patient.dart';
@@ -21,6 +23,11 @@ import 'view/onboarding/onboarding.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   debugPaintSizeEnabled = true;
+  await CacheHelper.init();
+
+  token = CacheHelper.getData(key: 'token');
+  page = CacheHelper.getData(key: 'collection');
+  splash = CacheHelper.getData(key: "splash");
   runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -49,8 +56,18 @@ class MyApp extends StatelessWidget {
         a_login.id: (context) => const a_login(),
         d_login.id: (context) => const d_login(),
         whowant.id: (context) => const whowant(),
+        whoscrean.id: (context) => const whoscrean(),
+        MapGloply.id: (context) => const MapGloply(),
       },
-      initialRoute: f_splashScrean.id,
+      initialRoute: splash == false || splash == null
+          ? f_splashScrean.id
+          : (token == '' || token == null)
+              ? whoscrean.id
+              : page == assistant.id
+                  ? assistant.id
+                  : page == doctor.id
+                      ? doctor.id
+                      : whowant.id,
     );
   }
 }

@@ -161,16 +161,16 @@ class _p_dmapState extends State<p_dmap> {
                     ),
                   ),
                 ),
-          // Padding(
-          //   padding: const EdgeInsets.all(15.0),
-          //   child: SearchLocationWidget(
-          //     mapController: _mapController,
-          //     pickedAddress: 'ابحث عن أقرب طوارئ/دكتور/مستشفي لك',
-          //     isEnabled: null,
-          //     fromDialog: false,
-          //     hint: 'l,ru;',
-          //   ),
-          // ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SearchLocationWidget(
+              mapController: _mapController,
+              pickedAddress: 'Search for Doctors',
+              isEnabled: null,
+              fromDialog: false,
+              hint: 'l,ru;',
+            ),
+          ),
           // Positioned(
           //   bottom: 50,
           //   left: 50,

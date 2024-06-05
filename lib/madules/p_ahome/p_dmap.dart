@@ -106,10 +106,6 @@ class _p_amapState extends State<p_amap> {
                 description,
                 style: const TextStyle(color: Colors.blue),
               ),
-              Row(
-                  // mainAxisAlignment:
-                  // MainAxisAlignment.end,
-                  children: []),
             ],
           ),
         ),
@@ -162,16 +158,16 @@ class _p_amapState extends State<p_amap> {
                     ),
                   ),
                 ),
-          // Padding(
-          //   padding: const EdgeInsets.all(15.0),
-          //   child: SearchLocationWidget(
-          //     mapController: _mapController,
-          //     pickedAddress: 'ابحث عن أقرب طوارئ/دكتور/مستشفي لك',
-          //     isEnabled: null,
-          //     fromDialog: false,
-          //     hint: 'l,ru;',
-          //   ),
-          // ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SearchLocationWidget(
+              mapController: _mapController,
+              pickedAddress: 'Search for Assistant',
+              isEnabled: true,
+              fromDialog: false,
+              hint: 'l,ru;',
+            ),
+          ),
           // Positioned(
           //   bottom: 50,
           //   left: 50,

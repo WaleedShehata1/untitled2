@@ -1,11 +1,12 @@
-// ignore_for_file: body_might_complete_normally_catch_error, use_build_context_synchronously
+// ignore_for_file: body_might_complete_normally_catch_error, use_build_context_synchronously, non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/helper/snackBar.dart';
-import 'package:untitled/madules/Login/p_Login.dart';
 
+import '../../models/request_model.dart';
 import '../../models/user_model.dart';
 
 part 'register_state.dart';
@@ -39,7 +40,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String email,
     required String uId,
     required String address,
-    required String collection,
   }) {
     UserModel model = UserModel(
       email: email,
@@ -49,7 +49,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       address: address,
     );
     FirebaseFirestore.instance
-        .collection(collection)
+        .collection("patients_info")
         .doc(uId)
         .set(model.toFireStore())
         .then((value) {
@@ -66,7 +66,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String userName,
     required String phone,
     required String address,
-    required String collection,
     required String routeName,
     required BuildContext context,
   }) async {
@@ -83,8 +82,223 @@ class RegisterCubit extends Cubit<RegisterState> {
                   phone: phone,
                   email: email,
                   uId: value.user!.uid,
-                  collection: collection,
                   address: address,
+                ),
+                showSnackbar(context, 'Success'),
+                print('Success'),
+                Navigator.pushReplacementNamed(context, routeName)
+              })
+          .catchError((error) {
+        emit(RegisterErrorState(error.toString()));
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showSnackbar(context, 'The password provided is too weak.');
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        showSnackbar(context, 'The account already exists for that email.');
+        print('The account already exists for that email.');
+      } else {
+        showSnackbar(context, e.toString());
+        print("===${e.toString()}");
+      }
+    }
+    isLoading = false;
+  }
+
+//---------------------------------------------------------
+  void requestDoctors({
+    required String userId,
+    required String doctorId,
+    required String address,
+    required String message,
+    required String state,
+  }) {
+    RequestModelDoctor request = RequestModelDoctor(
+      userId: userId,
+      address: address,
+      doctorId: doctorId,
+      message: message,
+      state: state,
+    );
+    try {
+      FirebaseFirestore.instance
+          .collection("requests_doctor")
+          .add(request.toFireStore());
+    } catch (e) {
+      print("error request doctor = ${e.toString}");
+    }
+  }
+
+// --------------------------------------------------------
+  Future<void> doctorsCreate({
+    required String userName,
+    required String phone,
+    required String email,
+    required String uId,
+    required String imageUrl,
+    required String address,
+    required String price,
+    required String latitude,
+    required String longitude,
+    required String specialty,
+    required String rating,
+  }) async {
+    DoctorsModel model = DoctorsModel(
+      rating: rating,
+      email: email,
+      phone: phone,
+      name: userName,
+      uId: uId,
+      address: address,
+      price: price,
+      specialty: specialty,
+      latitude: latitude,
+      longitude: longitude,
+      imageUrl: imageUrl,
+    );
+    await FirebaseFirestore.instance
+        .collection("doctors_info")
+        .doc(uId)
+        .set(model.toFireStore())
+        .then((value) {
+      emit(UserCreateSuccessState(uId));
+      print('Done =111111111111111111');
+    }).catchError((error) {
+      emit(UserCreateErrorState(error.toString()));
+    });
+  }
+
+  Future<void> doctorsSignUp({
+    required String password,
+    required String imageUrl,
+    required String email,
+    required String userName,
+    required String phone,
+    required String address,
+    required String routeName,
+    required String price,
+    required String latitude,
+    required String longitude,
+    required String specialty,
+    required BuildContext context,
+  }) async {
+    isLoading = true;
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          )
+          .then((value) => {
+                doctorsCreate(
+                  rating: "5.0",
+                  userName: userName,
+                  phone: phone,
+                  email: email,
+                  uId: value.user!.uid,
+                  address: address,
+                  price: price,
+                  specialty: specialty,
+                  latitude: latitude,
+                  longitude: longitude,
+                  imageUrl: imageUrl,
+                ),
+                showSnackbar(context, 'Success'),
+                print('Success'),
+                Navigator.pushReplacementNamed(context, routeName)
+              })
+          .catchError((error) {
+        emit(RegisterErrorState(error.toString()));
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showSnackbar(context, 'The password provided is too weak.');
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        showSnackbar(context, 'The account already exists for that email.');
+        print('The account already exists for that email.');
+      } else {
+        showSnackbar(context, e.toString());
+        print("===${e.toString()}");
+      }
+    }
+    isLoading = false;
+  }
+
+//----------------------------------------------------------
+  void assistantCreate({
+    required String userName,
+    required String phone,
+    required String latitude,
+    required String longitude,
+    required String imageUrl,
+    required String email,
+    required String uId,
+    required String address,
+    required String price,
+    required String rating,
+    required String specialty,
+  }) {
+    DoctorsModel model = DoctorsModel(
+      email: email,
+      phone: phone,
+      name: userName,
+      uId: uId,
+      address: address,
+      price: price,
+      specialty: specialty,
+      rating: rating,
+      latitude: latitude,
+      longitude: longitude,
+      imageUrl: imageUrl,
+    );
+    FirebaseFirestore.instance
+        .collection("assistants_info")
+        .doc(uId)
+        .set(model.toFireStore())
+        .then((value) {
+      emit(UserCreateSuccessState(uId));
+      print('Done =111111111111111111');
+    }).catchError((error) {
+      emit(UserCreateErrorState(error.toString()));
+    });
+  }
+
+  Future<void> assistantSignUp({
+    required String password,
+    required String email,
+    required String userName,
+    required String phone,
+    required String address,
+    required String latitude,
+    required String longitude,
+    required String routeName,
+    required String price,
+    required String specialty,
+    required String imageUrl,
+    required BuildContext context,
+  }) async {
+    isLoading = true;
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          )
+          .then((value) => {
+                assistantCreate(
+                  rating: "5.0",
+                  userName: userName,
+                  phone: phone,
+                  email: email,
+                  uId: value.user!.uid,
+                  address: address,
+                  price: price,
+                  specialty: specialty,
+                  latitude: latitude,
+                  longitude: longitude,
+                  imageUrl: imageUrl,
                 ),
                 showSnackbar(context, 'Success'),
                 print('Success'),

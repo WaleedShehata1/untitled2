@@ -7,7 +7,7 @@ import '../../shared/componente.dart';
 
 class whoscrean extends StatefulWidget {
   const whoscrean({super.key});
-
+  static String id = "whoscrean";
   @override
   State<whoscrean> createState() => _whoscreanState();
 }

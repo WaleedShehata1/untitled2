@@ -65,7 +65,7 @@ class d_login extends StatelessWidget {
                         style: const TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
+                              vertical: 10.0, horizontal: 15.0),
                           labelStyle: TextStyle(
                             color: Colors.grey[600],
                           ),
@@ -73,7 +73,7 @@ class d_login extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
                       ),
@@ -128,12 +128,6 @@ class d_login extends StatelessWidget {
                           if (kDebugMode) {
                             print('Done');
                           }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const doctor(),
-                            ),
-                          );
                         },
                         child: const Text(
                           'Login',

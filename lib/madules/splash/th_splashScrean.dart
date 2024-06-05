@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/madules/splash/s_splashScreans.dart';
 import '../../const/images/image.dart';
+import '../../helper/shared.dart';
 import '../../shared/componente.dart';
 import '../Register/who.dart';
 import 'f_splashScrean.dart';
@@ -75,10 +76,14 @@ class th_splashScrean extends StatelessWidget {
               right: 16.0,
               child: InkWell(
                 onTap: () {
-                  Navigator.push(
+                  CacheHelper.saveData(key: "splash", value: true).then(
+                    (value) => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const whoscrean()));
+                        builder: (context) => const whoscrean(),
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
                   width: 180,

@@ -1,11 +1,18 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:untitled/madules/Register/map_gloply.dart';
+import 'package:path/path.dart' as p;
 import '../../cubit/register/register_cubit.dart';
 import '../../shared/componente.dart';
+import '../../shared/drop_down_list.dart';
+import '../../static/static.dart';
 import '../Login/d_Login.dart';
 
 class r_doctor extends StatefulWidget {
@@ -16,17 +23,41 @@ class r_doctor extends StatefulWidget {
 }
 
 class _r_doctorState extends State<r_doctor> {
-  final List<String> items = ['عنصر 1', 'عنصر 2', 'عنصر 3', 'عنصر 4'];
+  var items = ['جراحه', 'انف و اذن', 'نسا و توليد', 'عظام'];
   bool isChecked = false;
-  String selectedItem = 'عنصر 1';
+  String? selectedItem;
+  final ImagePicker picker = ImagePicker();
+  File? pickImage;
+  String imageUrl = '';
+  fetchImage() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return null;
+    }
+    setState(() {
+      pickImage = File(image.path);
+    });
+    print("${pickImage?.path}");
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child("images");
+    Reference referenceImagesToUpload =
+        referenceDirImages.child(p.basename(pickImage!.path));
+    try {
+      await referenceImagesToUpload.putFile(pickImage!);
+      imageUrl = await referenceImagesToUpload.getDownloadURL();
+    } catch (e) {
+      print("error=${e.toString()}---$e");
+    }
+    print("imageUrl=$imageUrl");
+  }
 
-  @override
   Widget build(BuildContext context) {
     var nameController = TextEditingController();
     var emailController = TextEditingController();
     var phoneController = TextEditingController();
     var passwordController = TextEditingController();
     var addressController = TextEditingController();
+    var priceController = TextEditingController();
     var formKey = GlobalKey<FormState>();
     return BlocProvider(
       create: (context) => RegisterCubit(),
@@ -41,232 +72,274 @@ class _r_doctorState extends State<r_doctor> {
                 elevation: 0,
               ),
               body: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    logo,
-                    const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          'creating an account',
-                          style: TextStyle(color: Colors.white, fontSize: 30),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: TextField(
-                        style: const TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          labelStyle: TextStyle(color: Colors.grey[600]),
-                          labelText: 'Full name',
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      logo,
+                      const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            'creating an account',
+                            style: TextStyle(color: Colors.white, fontSize: 30),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: TextFormField(
-                        controller: addressController,
-                        validator: (date) {
-                          if (date!.trim().isEmpty) {
-                            return 'Enter your address ';
-                          }
-                        },
-                        style: const TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 15.0, horizontal: 15.0),
-                          labelStyle: TextStyle(color: Colors.grey[600]),
-                          labelText: 'Address',
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: TextField(
-                        style: const TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
-                            labelStyle: TextStyle(color: Colors.grey[600]),
-                            labelText: 'Valid email',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            )),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
-                            labelStyle: TextStyle(color: Colors.grey[600]),
-                            labelText: 'Phone number',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            )),
-                      ),
-                    ),
-                    SizedBox(
-                        height: 75,
-                        child: PasswordTextField(
-                          controller: null,
-                          validator: (value) {},
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: 350,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25.0)),
-                        child: DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            counterStyle: const TextStyle(
-                              fontSize: 13,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            labelStyle: const TextStyle(
-                                color: defultColor, fontSize: 16),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.blue, width: 2),
-                              borderRadius: BorderRadius.circular(
-                                15,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, MapGloply.id);
+                            },
+                            icon: const CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.location_pin,
+                                color: defultColor,
                               ),
                             ),
-                            fillColor: Colors.white,
-                            filled: true,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                20,
+                          ),
+                          IconButton(
+                            onPressed: fetchImage,
+                            icon: const CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.image,
+                                color: defultColor,
                               ),
-                              borderSide: const BorderSide(
-                                  color: defultColor, width: 2),
-                            ),
-                            errorMaxLines: 2,
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(
-                                  width: 2.0, color: Colors.red),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(
-                                  width: 2.0, color: Colors.red),
                             ),
                           ),
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 154),
-                            child: Icon(Icons.arrow_drop_down,
-                                color: Colors.grey[600]),
+                          SizedBox(
+                            width: 200,
+                            height: 65,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: DefaultDropdown(
+                                labelText: 'Health Status',
+                                labelStyle: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Please enter your Health Status';
+                                  }
+                                  return null;
+                                },
+                                value: selectedItem,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedItem = value as String?;
+                                  });
+                                },
+                                items: items.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                           ),
-                          style: const TextStyle(fontSize: 18.0),
-                          value: selectedItem,
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              selectedItem = newValue;
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: TextFormField(
+                          validator: (date) {
+                            if (date!.trim().isEmpty) {
+                              return 'Enter your name ';
                             }
                           },
-                          items: items
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                '   Specialty',
-                                style: TextStyle(
-                                    fontSize: 16.0, color: Colors.grey[600]),
-                              ),
-                            );
-                          }).toList(),
+                          controller: nameController,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            labelStyle: TextStyle(color: Colors.grey[600]),
+                            labelText: 'Full name',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    SizedBox(
-                      width: 200,
-                      height: 40,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                        ),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            RegisterCubit.get(context).userSignUp(
-                              password: passwordController.text,
-                              email: emailController.text,
-                              userName: nameController.text,
-                              phone: phoneController.text,
-                              collection: "patients",
-                              context: context,
-                              address: addressController.text,
-                              routeName: d_login.id,
-                            );
-                          }
-                          if (kDebugMode) {
-                            print('Done');
-                          }
-                        },
-                        child: const Text(
-                          'Sign up',
-                          style: TextStyle(color: defultColor),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: TextFormField(
+                          controller: addressController,
+                          validator: (date) {
+                            if (date!.trim().isEmpty) {
+                              return 'Enter your address ';
+                            }
+                          },
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            labelStyle: TextStyle(color: Colors.grey[600]),
+                            labelText: 'Address',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Already a member?',
-                          style: TextStyle(color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: TextFormField(
+                          controller: emailController,
+                          validator: (date) {
+                            if (date!.trim().isEmpty) {
+                              return 'Enter your E-mail ';
+                            }
+                          },
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey[600]),
+                              labelText: 'Valid email',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              )),
                         ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const d_login()));
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: TextFormField(
+                          controller: phoneController,
+                          validator: (date) {
+                            if (date!.trim().isEmpty) {
+                              return 'Enter your Phone number ';
+                            }
+                          },
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey[600]),
+                              labelText: 'Phone number',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              )),
+                        ),
+                      ),
+                      SizedBox(
+                          height: 75,
+                          child: PasswordTextField(
+                            controller: passwordController,
+                            validator: (date) {
+                              if (date!.trim().isEmpty) {
+                                return 'Enter your password ';
+                              }
                             },
-                            child: const Text(
-                              'Log In',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ))
-                      ],
-                    )
-                  ],
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: TextFormField(
+                          controller: priceController,
+                          validator: (date) {
+                            if (date!.trim().isEmpty) {
+                              return 'Enter your Price ';
+                            }
+                          },
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey[600]),
+                              labelText: 'price',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              )),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: 200,
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              RegisterCubit.get(context).doctorsSignUp(
+                                password: passwordController.text,
+                                email: emailController.text,
+                                userName: nameController.text,
+                                phone: phoneController.text,
+                                context: context,
+                                address: addressController.text,
+                                routeName: d_login.id,
+                                specialty: selectedItem.toString(),
+                                price: priceController.text,
+                                latitude: positionGlobly!.latitude.toString(),
+                                longitude: positionGlobly!.longitude.toString(),
+                                imageUrl: imageUrl,
+                              );
+                            }
+                            if (kDebugMode) {
+                              print('Done');
+                            }
+                          },
+                          child: const Text(
+                            'Sign up',
+                            style: TextStyle(color: defultColor),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Already a member?',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const d_login()));
+                              },
+                              child: const Text(
+                                'Log In',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               backgroundColor: defultColor,

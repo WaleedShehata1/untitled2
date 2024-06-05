@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:untitled/helper/shared.dart';
 
 import '../../helper/snackBar.dart';
 
@@ -39,6 +40,8 @@ class SignInCubit extends Cubit<SignInStates> {
           .then((value) {
         emit(SignInSuccessState(value.user!.uid));
         print('Done =${value.user!.uid}');
+        CacheHelper.saveData(key: "token", value: "${value.user!.uid}");
+        CacheHelper.saveData(key: "collection", value: routeName);
         showSnackbar(context, 'Success');
         Navigator.pushReplacementNamed(context, routeName);
       });
@@ -52,7 +55,9 @@ class SignInCubit extends Cubit<SignInStates> {
         print('Wrong password provided for that user.');
         emit(SignInErrorState('Wrong password provided for that user.'));
       } else {
-        print('${e.message}');
+        showSnackbar(context, 'No user found.');
+        print('m==============${e.message}');
+        emit(SignInErrorState(e.message.toString()));
       }
     } catch (ex) {
       showSnackbar(context, 'there was an error== ${ex.toString()}');

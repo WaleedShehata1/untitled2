@@ -65,6 +65,7 @@ class r_patient extends StatelessWidget {
                               if (date!.trim().isEmpty) {
                                 return 'Enter your Name ';
                               }
+                              return null;
                             },
                             style: const TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -89,6 +90,7 @@ class r_patient extends StatelessWidget {
                               if (date!.trim().isEmpty) {
                                 return 'Enter your address ';
                               }
+                              return null;
                             },
                             style: const TextStyle(color: Colors.black),
                             decoration: InputDecoration(
@@ -136,8 +138,9 @@ class r_patient extends StatelessWidget {
                             controller: phoneController,
                             validator: (date) {
                               if (date!.trim().isEmpty) {
-                                return 'Phone number ';
+                                return 'Phone number';
                               }
+                              return null;
                             },
                             keyboardType: TextInputType.number,
                             style: const TextStyle(color: Colors.black),
@@ -154,7 +157,7 @@ class r_patient extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                            height: 75,
+                            height: 70,
                             child: PasswordTextField(
                               validator: (value) {
                                 if (value!.trim().isEmpty) {
@@ -181,7 +184,6 @@ class r_patient extends StatelessWidget {
                                     email: emailController.text,
                                     userName: nameController.text,
                                     phone: phoneController.text,
-                                    collection: "patients",
                                     context: context,
                                     address: addressController.text,
                                     routeName: login.id,

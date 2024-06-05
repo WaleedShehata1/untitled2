@@ -45,11 +45,11 @@ class _profileState extends State<profile> {
           children: [
             _profileImageFile != null
                 ? CircleAvatar(
-                    radius: 100,
+                    radius: 60,
                     backgroundImage: FileImage(_profileImageFile!),
                   )
                 : const CircleAvatar(
-                    radius: 100,
+                    radius: 60,
                     child: Icon(Icons.person),
                   ),
             const SizedBox(height: 20),
