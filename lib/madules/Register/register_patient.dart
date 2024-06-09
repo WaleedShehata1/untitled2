@@ -1,9 +1,13 @@
 // ignore_for_file: camel_case_types, must_be_immutable, non_constant_identifier_names, avoid_types_as_parameter_names
 
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:path/path.dart' as p;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../cubit/register/register_cubit.dart';
@@ -19,6 +23,31 @@ class r_patient extends StatelessWidget {
   var passwordController = TextEditingController();
   var addressController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  File? pickImage;
+  final ImagePicker picker = ImagePicker();
+  String imageUrl = '';
+  fetchImage() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image == null) {
+      return null;
+    }
+
+    pickImage = File(image.path);
+
+    print("${pickImage?.path}");
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child("images");
+    Reference referenceImagesToUpload =
+        referenceDirImages.child(p.basename(pickImage!.path));
+    try {
+      await referenceImagesToUpload.putFile(pickImage!);
+      imageUrl = await referenceImagesToUpload.getDownloadURL();
+    } catch (e) {
+      print("error=${e.toString()}---$e");
+    }
+    print("imageUrl=$imageUrl");
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -56,30 +85,51 @@ class r_patient extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: TextFormField(
-                            controller: nameController,
-                            validator: (date) {
-                              if (date!.trim().isEmpty) {
-                                return 'Enter your Name ';
-                              }
-                              return null;
-                            },
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 15.0, horizontal: 15.0),
-                              labelStyle: TextStyle(color: Colors.grey[600]),
-                              labelText: 'Full name',
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 200,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                child: TextFormField(
+                                  controller: nameController,
+                                  validator: (date) {
+                                    if (date!.trim().isEmpty) {
+                                      return 'Enter your Name ';
+                                    }
+                                    return null;
+                                  },
+                                  style: const TextStyle(color: Colors.black),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 15.0, horizontal: 15.0),
+                                    labelStyle:
+                                        TextStyle(color: Colors.grey[600]),
+                                    labelText: 'Full name',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            SizedBox(
+                              width: 100,
+                              child: IconButton(
+                                onPressed: fetchImage,
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.image,
+                                    color: defultColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(

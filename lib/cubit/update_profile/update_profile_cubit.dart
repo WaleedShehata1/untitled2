@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/helper/shared.dart';
 
@@ -9,15 +10,51 @@ part 'update_profile_state.dart';
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   UpdateProfileCubit() : super(UpdateProfileInitial());
   static UpdateProfileCubit get(context) => BlocProvider.of(context);
-
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController phoneEditingController = TextEditingController();
+  TextEditingController priceEditingController = TextEditingController();
+  String imageUrl = '';
+  String newImageUrl = '';
   Future<void> updateUser() {
     CollectionReference users =
         FirebaseFirestore.instance.collection('patients_info');
     return users
-        .doc(token)
-        .update({"lat": "1000", "log": '444524'})
+        .doc(CacheHelper.getData(key: 'token'))
+        .update({
+          "userName": userNameController.text,
+          "phone": phoneEditingController.text,
+          "imageUrl": newImageUrl == '' ? imageUrl : newImageUrl,
+        })
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
+  }
+
+  Future<void> updateDoctor() {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('doctors_info');
+    return users
+        .doc(CacheHelper.getData(key: 'token'))
+        .update({
+          "userName": userNameController.text,
+          "phone": phoneEditingController.text,
+          "imageUrl": newImageUrl == '' ? imageUrl : newImageUrl,
+        })
+        .then((value) => print("Doctor Updated"))
+        .catchError((error) => print("Failed to update doctor: $error"));
+  }
+
+  Future<void> updateAssistants() {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('assistants_info');
+    return users
+        .doc(CacheHelper.getData(key: 'token'))
+        .update({
+          "userName": userNameController.text,
+          "phone": phoneEditingController.text,
+          "imageUrl": newImageUrl == '' ? imageUrl : newImageUrl,
+        })
+        .then((value) => print("Assistants Updated"))
+        .catchError((error) => print("Failed to update assistants: $error"));
   }
 
 //---------------------------------------------------------
@@ -73,16 +110,62 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
 
   Future<void> getdate() async {
     CollectionReference users =
-        FirebaseFirestore.instance.collection('patients_info');
-    users.doc(CacheHelper.getData(key: "token")).get().then((value) {
+        await FirebaseFirestore.instance.collection('patients_info');
+    users.doc(CacheHelper.getData(key: "token")).get().then((value) async {
       print(CacheHelper.getData(key: "token"));
       print("getdate=${value.data()}");
+      imageUrl = value["imageUrl"];
+      userNameController.text = value["userName"];
+      phoneEditingController.text = value["phone"];
+
       dataUser = {
         "name": value["userName"],
-        "email": value["email"],
+        "imageUrl": value["imageUrl"],
         "phone": value["phone"]
       };
       return value;
     }).catchError((error) => print("Failed to update user: $error"));
+  }
+
+  Future<void> getdateDoctor() async {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('doctors_info');
+    users.doc(CacheHelper.getData(key: "token")).get().then((value) async {
+      print(CacheHelper.getData(key: "token"));
+      print("getdate=${value.data()}");
+      imageUrl = value["imageUrl"];
+      userNameController.text = value["userName"];
+      phoneEditingController.text = value["phone"];
+      priceEditingController.text = value["price"];
+
+      dataUser = {
+        "name": value["userName"],
+        "imageUrl": value["imageUrl"],
+        "phone": value["phone"],
+        "price": value["price"]
+      };
+      return value;
+    }).catchError((error) => print("Failed to update doctor: $error"));
+  }
+
+  Future<void> getdateAssistants() async {
+    CollectionReference users =
+        await FirebaseFirestore.instance.collection('assistants_info');
+    users.doc(CacheHelper.getData(key: "token")).get().then((value) async {
+      print(CacheHelper.getData(key: "token"));
+      print("getdate=${value.data()}");
+      imageUrl = value["imageUrl"];
+      userNameController.text = value["userName"];
+      phoneEditingController.text = value["phone"];
+      priceEditingController.text = value["price"];
+
+      dataUser = {
+        "name": value["userName"],
+        "imageUrl": value["imageUrl"],
+        "phone": value["phone"],
+        "price": value["price"]
+      };
+      return value;
+    }).catchError((error) => print("Failed to update assistants: $error"));
   }
 }

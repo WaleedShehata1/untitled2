@@ -1,18 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../cubit/update_request/update_request_cubit.dart';
+
 class CardRequests extends StatelessWidget {
-  CardRequests({super.key, required this.doc});
+  CardRequests({
+    super.key,
+    required this.doc,
+    required this.address,
+    required this.message,
+    required this.state,
+    required this.onTapAccepted,
+    required this.onTapRejected,
+  });
   final String doc;
+  final void Function()? onTapRejected;
+  final void Function()? onTapAccepted;
+  final String address;
+  final String message;
+  final String state;
   CollectionReference DataDocMessageFireStore =
       FirebaseFirestore.instance.collection('patients_info');
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
       future: DataDocMessageFireStore.doc(doc).get(),
-      builder: (context, snapshot) {
-        Map<String, dynamic> data =
-            snapshot.data!.data() as Map<String, dynamic>;
+      builder: (ctx, snapshot) {
+        Map<String, dynamic> data = {};
+        if (snapshot.hasData) {
+          data = snapshot.data?.data() as Map<String, dynamic>;
+        }
+
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
@@ -27,18 +45,23 @@ class CardRequests extends StatelessWidget {
                         height: 55,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.network(data['imageUrl'],
-                              fit: BoxFit.cover),
+                          child: snapshot.hasData
+                              ? Image.network(data['imageUrl'],
+                                  fit: BoxFit.cover)
+                              : Image.asset("assets/images/doctor.png",
+                                  fit: BoxFit.cover),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 25,
                       ),
                       Column(
                         children: [
-                          Text(data['userName']),
-                          Text(data['userName']),
-                          Text(data['userName']),
+                          Text(snapshot.hasData
+                              ? data['userName']
+                              : "user Name"),
+                          Text(snapshot.hasData ? address : "user address"),
+                          Text(snapshot.hasData ? message : "user message"),
                         ],
                       ),
                     ],
@@ -47,23 +70,23 @@ class CardRequests extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
-                        onPressed: () {},
-                        child: Text(
+                        onPressed: onTapRejected,
+                        child: const Text(
                           "Rejected",
                           style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.red,
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       TextButton(
-                        onPressed: () {},
-                        child: Text(
+                        onPressed: onTapAccepted,
+                        child: const Text(
                           "Accepted",
                           style: TextStyle(
-                            color: Colors.red,
+                            color: Colors.green,
                           ),
                         ),
                       ),

@@ -28,10 +28,11 @@ void main() async {
   token = CacheHelper.getData(key: 'token');
   page = CacheHelper.getData(key: 'collection');
   splash = CacheHelper.getData(key: "splash");
-  runApp(const MyApp());
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

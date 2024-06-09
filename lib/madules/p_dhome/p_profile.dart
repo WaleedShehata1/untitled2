@@ -19,12 +19,6 @@ class p_profile extends StatefulWidget {
 }
 
 class _p_profileState extends State<p_profile> {
-  final TextEditingController _textEditingController = TextEditingController();
-  final TextEditingController _phoneEditingController = TextEditingController();
-  final TextEditingController _passwordEditingController =
-      TextEditingController();
-  final TextEditingController _emailEditingController = TextEditingController();
-  final ImagePicker _picker = ImagePicker();
   final ImagePicker picker = ImagePicker();
 
   File? pickImage;
@@ -58,12 +52,12 @@ class _p_profileState extends State<p_profile> {
 
   @override
   Widget build(BuildContext context) {
+    UpdateProfileCubit.get(context).newImageUrl = imageUrl;
     return BlocProvider(
       create: (context) => UpdateProfileCubit()..getdate(),
       child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
         listener: (context, state) {},
         builder: (context, state) {
-          print("aaa${UpdateProfileCubit().dataUser.toString()}");
           return Scaffold(
             appBar: AppBar(
               actions: [
@@ -96,16 +90,29 @@ class _p_profileState extends State<p_profile> {
                                 FileImage(File(image!.path.toString())),
                           ),
                         )
-                      : ClipRRect(
-                          child: CircleAvatar(
-                            radius: 40,
-                            backgroundColor: Colors.grey.withOpacity(0.4),
-                            child: const Icon(
-                              Icons.person,
-                              size: 35,
+                      : UpdateProfileCubit.get(context).imageUrl != ''
+                          ? SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: CircleAvatar(
+                                  radius: 100,
+                                  child: Image.network(
+                                      UpdateProfileCubit.get(context).imageUrl),
+                                ),
+                              ),
+                            )
+                          : ClipRRect(
+                              child: CircleAvatar(
+                                radius: 40,
+                                backgroundColor: Colors.grey.withOpacity(0.4),
+                                child: const Icon(
+                                  Icons.person,
+                                  size: 35,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: fetchImage,
@@ -124,6 +131,7 @@ class _p_profileState extends State<p_profile> {
                             icon: const Icon(Icons.check),
                             color: defultColor,
                             onPressed: () {
+                              UpdateProfileCubit.get(context).updateUser();
                               print(
                                   "data =${UpdateProfileCubit.get(context).getdate}");
                               setState(() {
@@ -135,7 +143,6 @@ class _p_profileState extends State<p_profile> {
                           icon: const Icon(Icons.edit),
                           color: Colors.black,
                           onPressed: () {
-                            UpdateProfileCubit.get(context).updateUser();
                             setState(() {
                               _isEditing = true;
                             });
@@ -160,9 +167,13 @@ class _p_profileState extends State<p_profile> {
                         ),
                         Expanded(
                           child: TextField(
-                              controller: _textEditingController,
-                              enabled: _isEditing,
-                              style: const TextStyle(color: Colors.grey)),
+                            controller: UpdateProfileCubit.get(context)
+                                .userNameController,
+                            enabled: _isEditing,
+                            style: TextStyle(
+                              color: _isEditing ? Colors.black : Colors.grey,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -183,57 +194,13 @@ class _p_profileState extends State<p_profile> {
                         ),
                         Expanded(
                           child: TextField(
-                              controller: _phoneEditingController,
+                              controller: UpdateProfileCubit.get(context)
+                                  .phoneEditingController,
                               enabled: _isEditing,
-                              style: const TextStyle(color: Colors.grey)),
+                              style: TextStyle(
+                                color: _isEditing ? Colors.black : Colors.grey,
+                              )),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'E-mail',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: defultColor),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Expanded(
-                            child: TextField(
-                          controller: _emailEditingController,
-                          enabled: _isEditing,
-                          decoration: const InputDecoration(),
-                          style: const TextStyle(color: Colors.grey),
-                        )),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Password',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: defultColor),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Expanded(
-                            child: TextField(
-                          controller: _passwordEditingController,
-                          enabled: _isEditing,
-                          style: const TextStyle(color: Colors.grey),
-                        )),
                       ],
                     ),
                   ),
@@ -267,26 +234,4 @@ class _p_profileState extends State<p_profile> {
       ),
     );
   }
-
-  // Future<void> _pickImage() async {
-  //   final XFile? image = await _picker.pickImage(source: ImageSource.camera);
-  //   if (image != null) {
-  //     setState(() {
-  //       _image = File(image.path);
-  //     });
-  //     _uploadImageToFirebase(_image!);
-  //   }
-  // }
-
-  // Future<void> _uploadImageToFirebase(File image) async {
-  //   try {
-  //     final storageRef = FirebaseStorage.instance.ref();
-  //     final imagesRef = storageRef.child('images/${DateTime.now()}.jpg');
-  //     await imagesRef.putFile(image);
-  //     final downloadUrl = await imagesRef.getDownloadURL();
-  //     print('Image uploaded: $downloadUrl');
-  //   } catch (e) {
-  //     print('Error uploading image: ${e.toString()}');
-  //   }
-  // }
 }
