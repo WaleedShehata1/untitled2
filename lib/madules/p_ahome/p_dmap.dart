@@ -27,7 +27,7 @@ class _p_amapState extends State<p_amap> {
   static Position? position;
   static final CameraPosition _kGooglePlex = CameraPosition(
     // target: LatLng(position!.latitude, position!.longitude),
-    target: LatLng(31.346952, 30.536145),
+    target: LatLng(position!.latitude, position!.longitude),
     zoom: 8.4746,
   );
 

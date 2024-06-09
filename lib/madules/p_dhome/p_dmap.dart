@@ -28,7 +28,7 @@ class _p_dmapState extends State<p_dmap> {
   static Position? positionSearch;
   static final CameraPosition _kGooglePlex = CameraPosition(
     // target: LatLng(position!.latitude, position!.longitude),
-    target: LatLng(31.346952, 30.536145),
+    target: LatLng(position!.latitude, position!.longitude),
     zoom: 8.4746,
   );
 

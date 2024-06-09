@@ -44,9 +44,7 @@ class _p_asearchState extends State<p_asearch> {
     return BlocProvider(
       create: (context) => UpdateProfileCubit(),
       child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return FutureBuilder<QuerySnapshot>(
               future: doctorsFireStore.get(),
