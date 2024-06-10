@@ -10,6 +10,7 @@ part 'update_profile_state.dart';
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   UpdateProfileCubit() : super(UpdateProfileInitial());
   static UpdateProfileCubit get(context) => BlocProvider.of(context);
+
   TextEditingController userNameController = TextEditingController();
   TextEditingController phoneEditingController = TextEditingController();
   TextEditingController priceEditingController = TextEditingController();

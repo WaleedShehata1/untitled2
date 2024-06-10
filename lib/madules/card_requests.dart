@@ -28,7 +28,7 @@ class CardRequests extends StatelessWidget {
       builder: (ctx, snapshot) {
         Map<String, dynamic> data = {};
         if (snapshot.hasData) {
-          data = snapshot.data?.data() as Map<String, dynamic>;
+          data = snapshot.data!.data() as Map<String, dynamic>;
         }
 
         return Padding(

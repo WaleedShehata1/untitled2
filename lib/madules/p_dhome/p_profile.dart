@@ -80,39 +80,59 @@ class _p_profileState extends State<p_profile> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  image != null
-                      ? SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: CircleAvatar(
-                            radius: 100,
-                            backgroundImage:
-                                FileImage(File(image!.path.toString())),
-                          ),
-                        )
-                      : UpdateProfileCubit.get(context).imageUrl != ''
+                  Stack(
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: [
+                      image != null
                           ? SizedBox(
-                              width: 120,
-                              height: 120,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: CircleAvatar(
-                                  radius: 100,
-                                  child: Image.network(
-                                      UpdateProfileCubit.get(context).imageUrl),
-                                ),
+                              width: 100,
+                              height: 100,
+                              child: CircleAvatar(
+                                radius: 100,
+                                backgroundImage:
+                                    FileImage(File(image!.path.toString())),
                               ),
                             )
-                          : ClipRRect(
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.grey.withOpacity(0.4),
-                                child: const Icon(
-                                  Icons.person,
-                                  size: 35,
+                          : UpdateProfileCubit.get(context).imageUrl != ''
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 120,
+                                    height: 120,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: CircleAvatar(
+                                        radius: 100,
+                                        child: Image.network(
+                                            UpdateProfileCubit.get(context)
+                                                .imageUrl),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : ClipRRect(
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor:
+                                        Colors.grey.withOpacity(0.4),
+                                    child: const Icon(
+                                      Icons.person,
+                                      size: 35,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.autorenew_rounded,
+                          color: defultColor,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: fetchImage,

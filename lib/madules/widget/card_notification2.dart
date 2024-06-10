@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +11,14 @@ class CardNotification2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference DataDocMessageFireStore =
+    final CollectionReference DataDocMessageFireStore =
         FirebaseFirestore.instance.collection('doctors_info');
     return FutureBuilder<DocumentSnapshot>(
         future: DataDocMessageFireStore.doc(dateRequest.doctorId).get(),
-        builder: (context, snap) {
-          Map<String, dynamic> data = {};
-          if (snap.hasData) {
-            data = snap.data?.data() as Map<String, dynamic>;
-          }
+        builder: (ctx, snap) {
+          Map data = {};
+          if (snap.hasData) data = snap.data!.data() as Map;
+
           return Card(
             child: Padding(
               padding: const EdgeInsets.all(5),

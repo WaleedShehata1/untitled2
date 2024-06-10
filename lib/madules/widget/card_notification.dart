@@ -14,8 +14,9 @@ class CardNotification extends StatelessWidget {
     return FutureBuilder<DocumentSnapshot>(
         future: DataDocMessageFireStore.doc(dateRequest.assistantId).get(),
         builder: (context, snap) {
-          late Map<String, dynamic> data =
-              snap.data?.data() as Map<String, dynamic>;
+          Map data = {};
+          if (snap.hasData) data = snap.data!.data() as Map;
+
           return Card(
             child: Padding(
               padding: const EdgeInsets.all(5),
@@ -25,14 +26,17 @@ class CardNotification extends StatelessWidget {
                   height: 55,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.network(data["imageUrl"], fit: BoxFit.cover),
+                    child: snap.hasData
+                        ? Image.network(data['imageUrl'], fit: BoxFit.cover)
+                        : Image.asset("assets/images/doctor.png",
+                            fit: BoxFit.cover),
                   ),
                 ),
                 title: Column(
                   children: [
-                    Text(data["userName"]),
-                    Text(dateRequest.address),
-                    Text(dateRequest.message),
+                    Text(snap.hasData ? data['userName'] : "user Name"),
+                    Text(snap.hasData ? data['specialty'] : "user specialty"),
+                    Text(snap.hasData ? data['address'] : "user address"),
                   ],
                 ),
                 trailing: Text(

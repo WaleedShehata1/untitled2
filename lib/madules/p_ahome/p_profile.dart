@@ -5,20 +5,20 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as p;
 import '../../cubit/update_profile/update_profile_cubit.dart';
-import '../../madules/Register/who.dart';
 import '../../helper/shared.dart';
 import '../../shared/componente.dart';
-import 'package:path/path.dart' as p;
+import '../../madules/Register/who.dart';
 
-class p_aprofile extends StatefulWidget {
-  const p_aprofile({super.key});
+class p_profile extends StatefulWidget {
+  const p_profile({super.key});
 
   @override
-  State<p_aprofile> createState() => _p_aprofileState();
+  State<p_profile> createState() => _p_profileState();
 }
 
-class _p_aprofileState extends State<p_aprofile> {
+class _p_profileState extends State<p_profile> {
   final ImagePicker picker = ImagePicker();
 
   File? pickImage;
@@ -80,39 +80,59 @@ class _p_aprofileState extends State<p_aprofile> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  image != null
-                      ? SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: CircleAvatar(
-                            radius: 100,
-                            backgroundImage:
-                                FileImage(File(image!.path.toString())),
-                          ),
-                        )
-                      : UpdateProfileCubit.get(context).imageUrl != ''
+                  Stack(
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: [
+                      image != null
                           ? SizedBox(
-                              width: 120,
-                              height: 120,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: CircleAvatar(
-                                  radius: 100,
-                                  child: Image.network(
-                                      UpdateProfileCubit.get(context).imageUrl),
-                                ),
+                              width: 100,
+                              height: 100,
+                              child: CircleAvatar(
+                                radius: 100,
+                                backgroundImage:
+                                    FileImage(File(image!.path.toString())),
                               ),
                             )
-                          : ClipRRect(
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundColor: Colors.grey.withOpacity(0.4),
-                                child: const Icon(
-                                  Icons.person,
-                                  size: 35,
+                          : UpdateProfileCubit.get(context).imageUrl != ''
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 120,
+                                    height: 120,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: CircleAvatar(
+                                        radius: 100,
+                                        child: Image.network(
+                                            UpdateProfileCubit.get(context)
+                                                .imageUrl),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : ClipRRect(
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor:
+                                        Colors.grey.withOpacity(0.4),
+                                    child: const Icon(
+                                      Icons.person,
+                                      size: 35,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.autorenew_rounded,
+                          color: defultColor,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: fetchImage,
@@ -167,12 +187,13 @@ class _p_aprofileState extends State<p_aprofile> {
                         ),
                         Expanded(
                           child: TextField(
-                              controller: UpdateProfileCubit.get(context)
-                                  .userNameController,
-                              enabled: _isEditing,
-                              style: TextStyle(
-                                color: _isEditing ? Colors.black : Colors.grey,
-                              )),
+                            controller: UpdateProfileCubit.get(context)
+                                .userNameController,
+                            enabled: _isEditing,
+                            style: TextStyle(
+                              color: _isEditing ? Colors.black : Colors.grey,
+                            ),
+                          ),
                         ),
                       ],
                     ),
