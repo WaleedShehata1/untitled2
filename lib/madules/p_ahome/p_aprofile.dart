@@ -11,14 +11,14 @@ import '../../helper/shared.dart';
 import '../../shared/componente.dart';
 import '../../madules/Register/who.dart';
 
-class p_profile extends StatefulWidget {
-  const p_profile({super.key});
+class p_aprofile extends StatefulWidget {
+  const p_aprofile({super.key});
 
   @override
-  State<p_profile> createState() => _p_profileState();
+  State<p_aprofile> createState() => _p_aprofileState();
 }
 
-class _p_profileState extends State<p_profile> {
+class _p_aprofileState extends State<p_aprofile> {
   final ImagePicker picker = ImagePicker();
 
   File? pickImage;
@@ -52,12 +52,12 @@ class _p_profileState extends State<p_profile> {
 
   @override
   Widget build(BuildContext context) {
-    UpdateProfileCubit.get(context).newImageUrl = imageUrl;
     return BlocProvider(
       create: (context) => UpdateProfileCubit()..getdate(),
       child: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
         listener: (context, state) {},
         builder: (context, state) {
+          UpdateProfileCubit.get(context).newImageUrl = imageUrl;
           return Scaffold(
             appBar: AppBar(
               actions: [
@@ -104,8 +104,10 @@ class _p_profileState extends State<p_profile> {
                                       child: CircleAvatar(
                                         radius: 100,
                                         child: Image.network(
-                                            UpdateProfileCubit.get(context)
-                                                .imageUrl),
+                                          UpdateProfileCubit.get(context)
+                                              .imageUrl,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ),

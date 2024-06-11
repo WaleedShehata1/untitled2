@@ -13,10 +13,6 @@ import 'madules/Register/register_doctor.dart';
 import 'madules/Register/register_patient.dart';
 import 'madules/assistant/assistant.dart';
 import 'madules/doctor/doctor.dart';
-import 'madules/splash/estsrni.dart';
-import 'madules/splash/f_splashScrean.dart';
-import 'madules/splash/s_splashScreans.dart';
-import 'madules/splash/th_splashScrean.dart';
 import 'madules/what_want/whowont.dart';
 import 'view/onboarding/onboarding.dart';
 
@@ -43,10 +39,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        SplashScreen.id: (context) => const SplashScreen(),
-        f_splashScrean.id: (context) => const f_splashScrean(),
-        s_splashScrean.id: (context) => s_splashScrean(),
-        th_splashScrean.id: (context) => const th_splashScrean(),
         OnBoarding.id: (context) => const OnBoarding(),
         r_assistant.id: (context) => const r_assistant(),
         r_doctor.id: (context) => const r_doctor(),
@@ -61,7 +53,7 @@ class MyApp extends StatelessWidget {
         MapGloply.id: (context) => const MapGloply(),
       },
       initialRoute: splash == false || splash == null
-          ? f_splashScrean.id
+          ? OnBoarding.id
           : (token == '' || token == null)
               ? whoscrean.id
               : page == assistant.id

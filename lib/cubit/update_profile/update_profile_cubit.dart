@@ -39,6 +39,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           "userName": userNameController.text,
           "phone": phoneEditingController.text,
           "imageUrl": newImageUrl == '' ? imageUrl : newImageUrl,
+          "price": priceEditingController.text,
         })
         .then((value) => print("Doctor Updated"))
         .catchError((error) => print("Failed to update doctor: $error"));
@@ -53,6 +54,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           "userName": userNameController.text,
           "phone": phoneEditingController.text,
           "imageUrl": newImageUrl == '' ? imageUrl : newImageUrl,
+          "price": priceEditingController.text,
         })
         .then((value) => print("Assistants Updated"))
         .catchError((error) => print("Failed to update assistants: $error"));
@@ -154,7 +156,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         await FirebaseFirestore.instance.collection('assistants_info');
     users.doc(CacheHelper.getData(key: "token")).get().then((value) async {
       print(CacheHelper.getData(key: "token"));
-      print("getdate=${value.data()}");
+      print("getdate=${value.data().hashCode}");
       imageUrl = value["imageUrl"];
       userNameController.text = value["userName"];
       phoneEditingController.text = value["phone"];

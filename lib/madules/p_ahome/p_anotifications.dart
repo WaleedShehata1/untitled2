@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled/helper/shared.dart';
 
 import '../../models/request_model.dart';
 import '../../shared/componente.dart';
@@ -42,22 +43,32 @@ class p_anotifications extends StatelessWidget {
               ? ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
-                    final alignment =
-                        _getAlignment(snapshot.data!.docs[index]['state']);
-                    final oppositeAlignment =
-                        alignment == CrossAxisAlignment.start
-                            ? CrossAxisAlignment.end
-                            : CrossAxisAlignment.start;
+                    var message;
+                    if ((snapshot.data!.docs[index]['userId']) ==
+                        CacheHelper.getData(key: 'token')) {
+                      final alignment =
+                          _getAlignment(snapshot.data!.docs[index]['state']);
+                      final oppositeAlignment =
+                          alignment == CrossAxisAlignment.start
+                              ? CrossAxisAlignment.end
+                              : CrossAxisAlignment.start;
 
-                    return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CardNotification(
-                          dateRequest: RequestModelAssistant.formJson(
-                              snapshot.data!.docs[index]),
-                        ));
+                      return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CardNotification(
+                            dateRequest: RequestModelAssistant.formJson(
+                                snapshot.data!.docs[index]),
+                          ));
+                    }
+                    message = (index == snapshot.data!.docs.length - 1)
+                        ? const Center(
+                            child: Text('not found requests'),
+                          )
+                        : const SizedBox();
+                    return message;
                   },
                 )
-              : Center(
+              : const Center(
                   child: Text('not found requests'),
                 ),
         );

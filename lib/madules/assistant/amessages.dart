@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubit/update_request/update_request_cubit.dart';
+import '../../helper/shared.dart';
 import '../../shared/componente.dart';
 import '../card_requests.dart';
 
@@ -19,7 +20,7 @@ class A_Messages extends StatefulWidget {
 class _A_MessagesState extends State<A_Messages> {
   @override
   Widget build(BuildContext ctx) {
-    CollectionReference doctorsMessageFireStore =
+    CollectionReference assistantMessageFireStore =
         FirebaseFirestore.instance.collection('requests_assistant');
 
     return BlocProvider(
@@ -30,7 +31,7 @@ class _A_MessagesState extends State<A_Messages> {
         },
         builder: (context, state) {
           return FutureBuilder<QuerySnapshot>(
-              future: doctorsMessageFireStore.get(),
+              future: assistantMessageFireStore.get(),
               builder: (context, snapshot) {
                 return Scaffold(
                   appBar: AppBar(
@@ -54,39 +55,53 @@ class _A_MessagesState extends State<A_Messages> {
                   body: snapshot.hasData
                       ? ListView.builder(
                           itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            if (snapshot.hasData &&
-                                (snapshot.data?.docs[index]['state'] ==
-                                    "wating")) {
-                              return CardRequests(
-                                doc: snapshot.data!.docs[index]['userId'],
-                                message: snapshot.data?.docs[index]['message'],
-                                state: snapshot.data?.docs[index]['state'],
-                                address: snapshot.data?.docs[index]['address'],
-                                onTapRejected: () {
-                                  setState(() {
-                                    UpdateRequestCubit.get(context)
-                                        .updateRequestAssistant(
-                                            requestId:
-                                                snapshot.data!.docs[index].id,
-                                            state: "Rejected");
-                                  });
-                                },
-                                onTapAccepted: () {
-                                  setState(() {
-                                    UpdateRequestCubit.get(context)
-                                        .updateRequestAssistant(
-                                            requestId:
-                                                snapshot.data!.docs[index].id,
-                                            state: "Accepted");
-                                  });
-                                },
-                              );
+                          itemBuilder: (ctx, index) {
+                            print("1");
+                            var message;
+                            if (snapshot.data?.docs[index]['assistantId'] ==
+                                CacheHelper.getData(key: 'token')) {
+                              print("2");
+                              if (snapshot.hasData &&
+                                  (snapshot.data?.docs[index]['state'] ==
+                                      "wating")) {
+                                print("3");
+                                return CardRequests(
+                                  doc: snapshot.data!.docs[index]['userId'],
+                                  message: snapshot.data!.docs[index]
+                                      ['message'],
+                                  state: snapshot.data!.docs[index]['state'],
+                                  address: snapshot.data!.docs[index]
+                                      ['address'],
+                                  onTapRejected: () {
+                                    setState(() {
+                                      UpdateRequestCubit.get(ctx)
+                                          .updateRequestDoctor(
+                                              requestId:
+                                                  snapshot.data!.docs[index].id,
+                                              state: "Rejected");
+                                    });
+                                  },
+                                  onTapAccepted: () {
+                                    setState(() {
+                                      UpdateRequestCubit.get(ctx)
+                                          .updateRequestDoctor(
+                                              requestId:
+                                                  snapshot.data!.docs[index].id,
+                                              state: "Accepted");
+                                    });
+                                  },
+                                );
+                              }
                             }
-                            return const SizedBox();
+                            message = (index == snapshot.data!.docs.length - 1)
+                                ? const Center(
+                                    child: Text('not found requests'),
+                                  )
+                                : const SizedBox();
+                            return message;
                           },
                         )
-                      : Center(
+                      : const Center(
                           child: Text("not found message"),
                         ),
                 );

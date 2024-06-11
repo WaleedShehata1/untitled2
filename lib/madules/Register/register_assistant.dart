@@ -28,6 +28,8 @@ class _r_assistantState extends State<r_assistant> {
   File? pickImage;
 
   String imageUrl = '';
+  bool dataImage = false;
+  bool datalocation = false;
   fetchImage() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image == null) {
@@ -259,27 +261,55 @@ class _r_assistantState extends State<r_assistant> {
                               ),
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, MapGloply.id);
-                            },
-                            icon: const CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.location_pin,
-                                color: defultColor,
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, MapGloply.id);
+                                },
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.location_pin,
+                                    color: defultColor,
+                                  ),
+                                ),
                               ),
-                            ),
+                              datalocation
+                                  ? const Text(
+                                      "Enter Location",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
                           ),
-                          IconButton(
-                            onPressed: fetchImage,
-                            icon: const CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.image,
-                                color: defultColor,
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: fetchImage,
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.image,
+                                    color: defultColor,
+                                  ),
+                                ),
                               ),
-                            ),
+                              dataImage
+                                  ? const Text(
+                                      "Enter Image",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
                           ),
                         ],
                       ),
@@ -295,20 +325,37 @@ class _r_assistantState extends State<r_assistant> {
                                   Colors.white)),
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              RegisterCubit.get(context).assistantSignUp(
-                                password: passwordController.text,
-                                email: emailController.text,
-                                userName: nameController.text,
-                                phone: phoneController.text,
-                                context: context,
-                                address: addressController.text,
-                                routeName: a_login.id,
-                                price: priceController.text,
-                                specialty: jobController.text,
-                                latitude: positionGlobly!.latitude.toString(),
-                                longitude: positionGlobly!.longitude.toString(),
-                                imageUrl: imageUrl,
-                              );
+                              if (imageUrl == "") {
+                                setState(() {});
+                                dataImage = true;
+                              } else if (positionGlobly == null) {
+                                setState(() {});
+                                datalocation = true;
+                              } else {
+                                RegisterCubit.get(context).assistantSignUp(
+                                  password: passwordController.text,
+                                  email: emailController.text,
+                                  userName: nameController.text,
+                                  phone: phoneController.text,
+                                  context: context,
+                                  address: addressController.text,
+                                  routeName: a_login.id,
+                                  price: priceController.text,
+                                  specialty: jobController.text,
+                                  latitude: positionGlobly!.latitude.toString(),
+                                  longitude:
+                                      positionGlobly!.longitude.toString(),
+                                  imageUrl: imageUrl,
+                                );
+                              }
+                            }
+                            if (imageUrl == "") {
+                              setState(() {});
+                              dataImage = true;
+                            }
+                            if (positionGlobly == null) {
+                              setState(() {});
+                              datalocation = true;
                             }
                             if (kDebugMode) {
                               print('Done');

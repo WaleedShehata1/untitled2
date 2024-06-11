@@ -237,6 +237,7 @@ class r_patient extends StatelessWidget {
                                     context: context,
                                     address: addressController.text,
                                     routeName: login.id,
+                                    imageUrl: imageUrl,
                                   );
                                 }
                                 if (kDebugMode) {

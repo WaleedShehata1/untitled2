@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_renaming_method_parameters
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,23 +27,28 @@ class DoctorCard extends StatelessWidget {
     var addressController = TextEditingController();
     var messageController = TextEditingController();
     var formKey = GlobalKey<FormState>();
-    sendRequest() {
+    sendRequest(context) {
       if (isDoctor == true) {
-        UpdateProfileCubit.get(ctx).requestDoctors(
-          userId: token!,
-          doctorId: doctorId,
-          address: addressController.text,
-          message: messageController.text,
-          state: 'wating',
-        );
+        UpdateProfileCubit.get(context)
+            .requestDoctors(
+              userId: CacheHelper.getData(key: 'token'),
+              doctorId: doctorId,
+              address: addressController.text,
+              message: messageController.text,
+              state: 'wating',
+            )
+            .then((value) => Navigator.of(context).pop());
+        print(CacheHelper.getData(key: 'token'));
       } else {
-        UpdateProfileCubit.get(ctx).requestAssistant(
-          userId: token!,
-          assistantId: doctorId,
-          address: addressController.text,
-          message: messageController.text,
-          state: 'wating',
-        );
+        UpdateProfileCubit.get(context)
+            .requestAssistant(
+              userId: CacheHelper.getData(key: 'token'),
+              assistantId: doctorId,
+              address: addressController.text,
+              message: messageController.text,
+              state: 'wating',
+            )
+            .then((value) => Navigator.of(context).pop());
       }
     }
 
@@ -165,8 +172,7 @@ class DoctorCard extends StatelessWidget {
                                           // يمكنك القيام بالإجراءات المناسبة هنا
                                           if (formKey.currentState!
                                               .validate()) {
-                                            sendRequest();
-                                            Navigator.of(context).pop();
+                                            sendRequest(ctx);
 
                                             /// address
                                             /// message

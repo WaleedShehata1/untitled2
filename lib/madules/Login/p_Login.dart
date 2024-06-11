@@ -86,32 +86,32 @@ class login extends StatelessWidget {
                             }
                           },
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const verify(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Forgot password?',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     SizedBox(
+                        //       width: 20,
+                        //     ),
+                        //     TextButton(
+                        //       onPressed: () {
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //             builder: (context) => const verify(),
+                        //           ),
+                        //         );
+                        //       },
+                        //       child: const Text(
+                        //         'Forgot password?',
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         SizedBox(
                           width: 250,

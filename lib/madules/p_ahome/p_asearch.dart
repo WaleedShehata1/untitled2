@@ -140,14 +140,14 @@ class _p_asearchState extends State<p_asearch> {
                                         doctor: Doctor.formJson(
                                             snapshot.data!.docs[index]),
                                         doctorId: snapshot.data!.docs.first.id,
-                                        isDoctor: true,
+                                        isDoctor: false,
                                       );
                                     }
                                     return null;
                                   },
                                 )
-                              : Center(
-                                  child: Text("${snapshot.error}"),
+                              : const Center(
+                                  child: Text("Not found any Doctors"),
                                 ),
                         ),
                       ],

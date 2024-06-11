@@ -1,14 +1,12 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:untitled/madules/p_ahome/p_profile.dart';
-
 import '../../shared/componente.dart';
-
+import 'p_aprofile.dart';
 import 'p_dhelp.dart';
 import 'p_dmap.dart';
-import 'p_dnotifications.dart';
-import 'p_dsearch.dart';
+import 'p_anotifications.dart';
+import 'p_asearch.dart';
 
 class p_abox extends StatefulWidget {
   const p_abox({super.key});
@@ -24,7 +22,7 @@ class _p_aboxState extends State<p_abox> {
       appointments: const [],
     ),
     const p_amap(),
-    const p_profile(),
+    const p_aprofile(),
     const p_anotifications(),
     const p_ahelp()
   ];

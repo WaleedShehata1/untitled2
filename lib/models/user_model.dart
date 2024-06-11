@@ -3,6 +3,7 @@ class UserModel {
   String phone;
   String email;
   String uId;
+  String imageUrl;
   String address;
 
   UserModel({
@@ -10,6 +11,7 @@ class UserModel {
     required this.email,
     required this.phone,
     required this.name,
+    required this.imageUrl,
     required this.address,
   });
 
@@ -20,6 +22,7 @@ class UserModel {
           name: data['userName'],
           phone: data['phone'],
           address: data['address'],
+          imageUrl: data['imageUrl'],
         );
 
   Map<String, dynamic> toFireStore() {
@@ -29,6 +32,7 @@ class UserModel {
       'userName': name,
       'phone': phone,
       'address': address,
+      'imageUrl': imageUrl,
     };
   }
 
@@ -38,6 +42,7 @@ class UserModel {
       email: jsonData['email'],
       name: jsonData['userName'],
       phone: jsonData['phone'],
+      imageUrl: jsonData['imageUrl'],
       address: jsonData['address'],
     );
   }

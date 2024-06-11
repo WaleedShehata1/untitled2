@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/cubit/update_request/update_request_cubit.dart';
+import 'package:untitled/helper/shared.dart';
 import 'package:untitled/madules/card_requests.dart';
 
 import '../../shared/componente.dart';
@@ -54,35 +55,46 @@ class _MessagesState extends State<Messages> {
                       ? ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (ctx, index) {
-                            if (snapshot.hasData &&
-                                (snapshot.data?.docs[index]['state'] ==
-                                    "wating")) {
-                              return CardRequests(
-                                doc: snapshot.data?.docs[index]['userId'],
-                                message: snapshot.data?.docs[index]['message'],
-                                state: snapshot.data?.docs[index]['state'],
-                                address: snapshot.data?.docs[index]['address'],
-                                onTapRejected: () {
-                                  setState(() {
-                                    UpdateRequestCubit.get(ctx)
-                                        .updateRequestDoctor(
-                                            requestId:
-                                                snapshot.data!.docs[index].id,
-                                            state: "Rejected");
-                                  });
-                                },
-                                onTapAccepted: () {
-                                  setState(() {
-                                    UpdateRequestCubit.get(ctx)
-                                        .updateRequestDoctor(
-                                            requestId:
-                                                snapshot.data!.docs[index].id,
-                                            state: "Accepted");
-                                  });
-                                },
-                              );
+                            var message;
+                            if (snapshot.data?.docs[index]['doctorId'] ==
+                                token) {
+                              if (snapshot.hasData &&
+                                  (snapshot.data?.docs[index]['state'] ==
+                                      "wating")) {
+                                return CardRequests(
+                                  doc: snapshot.data?.docs[index]['userId'],
+                                  message: snapshot.data?.docs[index]
+                                      ['message'],
+                                  state: snapshot.data?.docs[index]['state'],
+                                  address: snapshot.data?.docs[index]
+                                      ['address'],
+                                  onTapRejected: () {
+                                    setState(() {
+                                      UpdateRequestCubit.get(ctx)
+                                          .updateRequestDoctor(
+                                              requestId:
+                                                  snapshot.data!.docs[index].id,
+                                              state: "Rejected");
+                                    });
+                                  },
+                                  onTapAccepted: () {
+                                    setState(() {
+                                      UpdateRequestCubit.get(ctx)
+                                          .updateRequestDoctor(
+                                              requestId:
+                                                  snapshot.data!.docs[index].id,
+                                              state: "Accepted");
+                                    });
+                                  },
+                                );
+                              }
                             }
-                            return const SizedBox();
+                            message = (index == snapshot.data!.docs.length - 1)
+                                ? const Center(
+                                    child: Text('not found requests'),
+                                  )
+                                : const SizedBox();
+                            return message;
                           },
                         )
                       : const Center(

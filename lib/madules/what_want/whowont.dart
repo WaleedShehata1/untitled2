@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../shared/componente.dart';
 
-import '../p_ahome/p_dbox.dart';
+import '../p_ahome/p_abox.dart';
 import '../p_dhome/p_dbox.dart';
 
 class whowant extends StatelessWidget {

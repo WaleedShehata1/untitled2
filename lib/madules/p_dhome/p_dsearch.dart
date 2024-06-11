@@ -149,7 +149,7 @@ class _p_dsearchState extends State<p_dsearch> {
                                   },
                                 )
                               : Center(
-                                  child: Text("${snapshot.error}"),
+                                  child: Text("Not found any Doctors"),
                                 ),
                         ),
                       ],

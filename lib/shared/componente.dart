@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:untitled/const/onboarding.models.dart';
+
+import '../const/images/image.dart';
 // import 'package:flutter_map/flutter_map.dart';
 // import 'package:latlong/latlong.dart' as latlong;
 
@@ -65,100 +68,21 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   }
 }
 
-// class CacheHelper {
-//   static SharedPreferences? sharedPreferences;
-
-//   static init() async {
-//     sharedPreferences = await SharedPreferences.getInstance();
-//   }
-
-//   static Future<bool?> putData(
-//       {required String key, required bool value}) async {
-//     return await sharedPreferences?.setBool(key, value);
-//   }
-
-//   static dynamic getData({required String key}) {
-//     return sharedPreferences?.get(key);
-//   }
-
-//   static Future<bool?> saveData({
-//     required String key,
-//     required dynamic value,
-//   }) async {
-//     if (value is String) return await sharedPreferences?.setString(key, value);
-//     if (value is int) return await sharedPreferences?.setInt(key, value);
-//     if (value is bool) return await sharedPreferences?.setBool(key, value);
-//     return null;
-//   }
-
-//   static Future<bool?> clearData({
-//     required String key,
-//   }) async {
-//     return await sharedPreferences?.remove(key);
-//   }
-// }
-
-//import 'package:flutter/material.dart';
-// import 'package:flutter_map/flutter_map.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:latlong2/latlong.dart' as latlong;
-//
-// import 'dart:convert';
-//
-//
-// class p_dhelp extends StatefulWidget {
-//   @override
-//   State<p_dhelp> createState() => _p_dhelpState();
-// }
-//
-// class _p_dhelpState extends State<p_dhelp> {
-//   late MapController mapController;
-//   late latlong.LatLng currentLocation;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     mapController = MapController();
-//     currentLocation = latlong.LatLng(0, 0); // تهيئة مؤقتة
-//     _getCurrentLocation();
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return    Scaffold( body: FlutterMap(
-//       mapController: mapController,
-//       options: MapOptions(
-//         center: currentLocation,
-//         zoom: 13.0,
-//       ),
-//       layers: [
-//         TileLayerOptions(
-//           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-//           subdomains: ['a', 'b', 'c'],
-//         ),
-//         MarkerLayerOptions(
-//           markers: [
-//             Marker(
-//               width: 80.0,
-//               height: 80.0,
-//               point: currentLocation,
-//               builder: (ctx) => Container(
-//                 child: FlutterLogo(),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     ),
-//     );
-//   }
-//
-//   void _getCurrentLocation() async {
-//     Position position = await Geolocator.getCurrentPosition(
-//       desiredAccuracy: LocationAccuracy.high,
-//     );
-//     setState(() {
-//       currentLocation = latlong.LatLng(position.latitude, position.longitude);
-//     });
-//   }
-// }
+final onBoardingList = [
+  OnBoardingModel(
+    title: 'service for you',
+    body:
+        'The service is suitable for all cases and is provided by specialized experts',
+    image: ImagePath.fSplash,
+  ),
+  OnBoardingModel(
+    title: 'Find your health',
+    body: 'Fast service,immediate ambulanc service at reasonable prices ',
+    image: ImagePath.thSplash,
+  ),
+  OnBoardingModel(
+    title: 'Join A Community',
+    body: 'Fast service,immediate ambulanc service at reasonable prices ',
+    image: ImagePath.sSplash,
+  ),
+];

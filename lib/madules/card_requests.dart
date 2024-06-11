@@ -1,18 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, use_super_parameters
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../cubit/update_request/update_request_cubit.dart';
-
 class CardRequests extends StatelessWidget {
   CardRequests({
-    super.key,
+    Key? key,
     required this.doc,
+    required this.onTapRejected,
+    required this.onTapAccepted,
     required this.address,
     required this.message,
     required this.state,
-    required this.onTapAccepted,
-    required this.onTapRejected,
-  });
+  }) : super(key: key);
   final String doc;
   final void Function()? onTapRejected;
   final void Function()? onTapAccepted;
@@ -30,7 +29,6 @@ class CardRequests extends StatelessWidget {
         if (snapshot.hasData) {
           data = snapshot.data!.data() as Map<String, dynamic>;
         }
-
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
@@ -46,7 +44,9 @@ class CardRequests extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: snapshot.hasData
-                              ? Image.network(data['imageUrl'],
+                              ? Image.network(
+                                  data['imageUrl'] ??
+                                      "https://firebasestorage.googleapis.com/v0/b/sos1-84fac.appspot.com/o/images%2FzgQPPyh1yyI8dPlWhupG.jpg?alt=media&token=1c06cbc4-c685-404c-8928-b6bece691c5d",
                                   fit: BoxFit.cover)
                               : Image.asset("assets/images/doctor.png",
                                   fit: BoxFit.cover),
@@ -58,7 +58,7 @@ class CardRequests extends StatelessWidget {
                       Column(
                         children: [
                           Text(snapshot.hasData
-                              ? data['userName']
+                              ? data['userName'] ?? "user Name"
                               : "user Name"),
                           Text(snapshot.hasData ? address : "user address"),
                           Text(snapshot.hasData ? message : "user message"),

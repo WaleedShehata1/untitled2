@@ -38,6 +38,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String userName,
     required String phone,
     required String email,
+    required String imageUrl,
     required String uId,
     required String address,
   }) {
@@ -47,6 +48,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       name: userName,
       uId: uId,
       address: address,
+      imageUrl: imageUrl,
     );
     FirebaseFirestore.instance
         .collection("patients_info")
@@ -66,6 +68,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String userName,
     required String phone,
     required String address,
+    required String imageUrl,
     required String routeName,
     required BuildContext context,
   }) async {
@@ -83,6 +86,7 @@ class RegisterCubit extends Cubit<RegisterState> {
                   email: email,
                   uId: value.user!.uid,
                   address: address,
+                  imageUrl: imageUrl,
                 ),
                 showSnackbar(context, 'Success'),
                 print('Success'),
