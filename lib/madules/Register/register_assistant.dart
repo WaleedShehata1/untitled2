@@ -94,30 +94,90 @@ class _r_assistantState extends State<r_assistant> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: TextFormField(
-                          validator: (date) {
-                            if (date!.trim().isEmpty) {
-                              return 'Enter your name ';
-                            }
-                            return null;
-                          },
-                          controller: nameController,
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15.0, horizontal: 15.0),
-                            labelStyle: TextStyle(color: Colors.grey[600]),
-                            labelText: 'Full name',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, MapGloply.id);
+                                },
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.location_pin,
+                                    color: defultColor,
+                                  ),
+                                ),
+                              ),
+                              datalocation
+                                  ? const Text(
+                                      "Enter Location",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: fetchImage,
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.image,
+                                    color: defultColor,
+                                  ),
+                                ),
+                              ),
+                              dataImage
+                                  ? const Text(
+                                      "Enter Image",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 200,
+                            height: 65,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: TextFormField(
+                                validator: (date) {
+                                  if (date!.trim().isEmpty) {
+                                    return 'Enter your name ';
+                                  }
+                                  return null;
+                                },
+                                controller: nameController,
+                                style: const TextStyle(color: Colors.black),
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 15.0, horizontal: 15.0),
+                                  labelStyle:
+                                      TextStyle(color: Colors.grey[600]),
+                                  labelText: 'Full name',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -229,89 +289,29 @@ class _r_assistantState extends State<r_assistant> {
                               )),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: 200,
-                            height: 65,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 10),
-                              child: TextFormField(
-                                controller: priceController,
-                                validator: (date) {
-                                  if (date!.trim().isEmpty) {
-                                    return 'Enter your Price ';
-                                  }
-                                },
-                                keyboardType: TextInputType.number,
-                                style: const TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15.0),
-                                    labelStyle:
-                                        TextStyle(color: Colors.grey[600]),
-                                    labelText: 'price',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    )),
-                              ),
-                            ),
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, MapGloply.id);
-                                },
-                                icon: const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: Icon(
-                                    Icons.location_pin,
-                                    color: defultColor,
-                                  ),
-                                ),
-                              ),
-                              datalocation
-                                  ? const Text(
-                                      "Enter Location",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                onPressed: fetchImage,
-                                icon: const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: Icon(
-                                    Icons.image,
-                                    color: defultColor,
-                                  ),
-                                ),
-                              ),
-                              dataImage
-                                  ? const Text(
-                                      "Enter Image",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 12,
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: TextFormField(
+                          controller: priceController,
+                          validator: (date) {
+                            if (date!.trim().isEmpty) {
+                              return 'Enter your Price ';
+                            }
+                          },
+                          keyboardType: TextInputType.number,
+                          style: const TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 15.0, horizontal: 15.0),
+                              labelStyle: TextStyle(color: Colors.grey[600]),
+                              labelText: 'price',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              )),
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
