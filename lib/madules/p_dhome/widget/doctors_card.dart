@@ -116,7 +116,7 @@ class DoctorCard extends StatelessWidget {
                         style: const TextStyle(fontSize: 16),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 85),
+                        padding: const EdgeInsets.only(left: 50),
                         child: SizedBox(
                           height: 30,
                           child: TextButton(

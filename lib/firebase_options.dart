@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCttzb7ZyRzpDg6nwfyF93BV7NInCXLnWU',
-    appId: '1:484525981472:web:62d3cee19ed9e6734a6145',
-    messagingSenderId: '484525981472',
-    projectId: 'sos1-84fac',
-    authDomain: 'sos1-84fac.firebaseapp.com',
-    storageBucket: 'sos1-84fac.appspot.com',
-    measurementId: 'G-SJ9N3CE3S1',
+    apiKey: 'AIzaSyAvL1JSkIVkS3Rj8GvvztpW9ywgV8ZI648',
+    appId: '1:949602912599:web:6e2e03a3765d15e6179612',
+    messagingSenderId: '949602912599',
+    projectId: 'soso-bfd63',
+    authDomain: 'soso-bfd63.firebaseapp.com',
+    storageBucket: 'soso-bfd63.appspot.com',
+    measurementId: 'G-6NJNTTTWNE',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA-BOr0q4Pk-TWMaLhvFgegjS5KgjyslME',
-    appId: '1:484525981472:android:7fa8da0f3183c4344a6145',
-    messagingSenderId: '484525981472',
-    projectId: 'sos1-84fac',
-    storageBucket: 'sos1-84fac.appspot.com',
+    apiKey: 'AIzaSyAnn-m_3_cjVVgnbzaN0aPyUKvHbHUW_hg',
+    appId: '1:949602912599:android:c45710448adf8e1b179612',
+    messagingSenderId: '949602912599',
+    projectId: 'soso-bfd63',
+    storageBucket: 'soso-bfd63.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAEKJIfy87P7Lkd2YlHRcU9-AXlsIDe4ng',
-    appId: '1:484525981472:ios:9adfd1569a2a756f4a6145',
-    messagingSenderId: '484525981472',
-    projectId: 'sos1-84fac',
-    storageBucket: 'sos1-84fac.appspot.com',
+    apiKey: 'AIzaSyD0jbuhGWirrIwzqk4cOKGCYM8w7Imkr9I',
+    appId: '1:949602912599:ios:70ec90fce2940e84179612',
+    messagingSenderId: '949602912599',
+    projectId: 'soso-bfd63',
+    storageBucket: 'soso-bfd63.appspot.com',
     iosBundleId: 'com.example.untitled',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAEKJIfy87P7Lkd2YlHRcU9-AXlsIDe4ng',
-    appId: '1:484525981472:ios:9adfd1569a2a756f4a6145',
-    messagingSenderId: '484525981472',
-    projectId: 'sos1-84fac',
-    storageBucket: 'sos1-84fac.appspot.com',
+    apiKey: 'AIzaSyD0jbuhGWirrIwzqk4cOKGCYM8w7Imkr9I',
+    appId: '1:949602912599:ios:70ec90fce2940e84179612',
+    messagingSenderId: '949602912599',
+    projectId: 'soso-bfd63',
+    storageBucket: 'soso-bfd63.appspot.com',
     iosBundleId: 'com.example.untitled',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCttzb7ZyRzpDg6nwfyF93BV7NInCXLnWU',
-    appId: '1:484525981472:web:83691a641b9465f14a6145',
-    messagingSenderId: '484525981472',
-    projectId: 'sos1-84fac',
-    authDomain: 'sos1-84fac.firebaseapp.com',
-    storageBucket: 'sos1-84fac.appspot.com',
-    measurementId: 'G-H1S3JHLP4E',
+    apiKey: 'AIzaSyAvL1JSkIVkS3Rj8GvvztpW9ywgV8ZI648',
+    appId: '1:949602912599:web:08f12426cfc4103e179612',
+    messagingSenderId: '949602912599',
+    projectId: 'soso-bfd63',
+    authDomain: 'soso-bfd63.firebaseapp.com',
+    storageBucket: 'soso-bfd63.appspot.com',
+    measurementId: 'G-6HF0QMLZDC',
   );
+
 }

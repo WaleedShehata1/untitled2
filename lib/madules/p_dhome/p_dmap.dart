@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_collection_literals, camel_case_types
+// ignore_for_file: prefer_collection_literals
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter/widgets.dart';
@@ -13,19 +13,18 @@ import '../../function/loction_map.dart';
 import '../../static/serach_location_widget.dart';
 import '../../static/static.dart';
 
-class p_dmap extends StatefulWidget {
-  const p_dmap({super.key});
+class p_amap extends StatefulWidget {
+  const p_amap({super.key});
 
   @override
-  State<p_dmap> createState() => _p_dmapState();
+  State<p_amap> createState() => _p_amapState();
 }
 
-class _p_dmapState extends State<p_dmap> {
+class _p_amapState extends State<p_amap> {
   GoogleMapController? _mapController;
 
   final Set<Marker> markers = Set();
   static Position? position;
-  static Position? positionSearch;
   static final CameraPosition _kGooglePlex = CameraPosition(
     // target: LatLng(position!.latitude, position!.longitude),
     target: LatLng(position!.latitude, position!.longitude),
@@ -42,15 +41,15 @@ class _p_dmapState extends State<p_dmap> {
 
   @override
   void initState() {
-    addMarketAssistant();
+    addMarket();
     getMyCurrentLocation();
     super.initState();
   }
 
   Widget _customMarkerWidget(String url) {
     return SizedBox(
-      width: 50, // Specify a fixed size for testing
-      height: 50,
+      width: 100, // Specify a fixed size for testing
+      height: 100,
       child: Image.asset(url, fit: BoxFit.fill),
     );
   }
@@ -68,38 +67,28 @@ class _p_dmapState extends State<p_dmap> {
     }
   }
 
-  addMarketAssistant() async {
-    CollectionReference doctorsFireStore =
-        FirebaseFirestore.instance.collection('doctors_info');
-    FutureBuilder<QuerySnapshot>(
-      future: doctorsFireStore.get(),
-      builder: (context, snapshot) {
-        for (int i = 0; i < snapshot.data!.docs.length; i++) {
-          final customMarkerBytes =
-              _convertWidgetToBytes("assets/images/secretary.png");
-          final customMarkerIcon =
-              BitmapDescriptor.fromBytes(customMarkerBytes!);
-          markers.add(
-            Marker(
-              markerId: MarkerId(snapshot.data!.docs[i]["uId"]),
-              position: LatLng(
-                  snapshot.data!.docs[i]["lat"], snapshot.data!.docs[i]["log"]),
-              infoWindow: InfoWindow(
-                  title: snapshot.data!.docs[i]["userName"],
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context)=> ClinicProfileMap()));
-                    return _showCustomInfoWindow(
-                        snapshot.data!.docs[i]["userName"],
-                        snapshot.data!.docs[i]["address"]);
-                  }),
-              icon: customMarkerIcon,
-            ),
-          );
-        }
+  addMarket() async {
+    for (Market market in market) {
+      final customMarkerBytes =
+          await _convertWidgetToBytes("assets/images/doctor.png");
+      final customMarkerIcon = BitmapDescriptor.fromBytes(customMarkerBytes!);
+      markers.add(
+        Marker(
+          markerId: MarkerId(market.id!),
+          position: LatLng(market.long!, market.lat!),
+          infoWindow: InfoWindow(
+              title: market.title!,
+              onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=> ClinicProfileMap()));
+                return _showCustomInfoWindow(
+                    market.title!, market.description!);
+              }),
+          icon: customMarkerIcon,
+        ),
+      );
 
-        return const SizedBox();
-      },
-    );
+      setState(() {});
+    }
   }
 
   void _showCustomInfoWindow(String title, String description) {
@@ -117,10 +106,6 @@ class _p_dmapState extends State<p_dmap> {
                 description,
                 style: const TextStyle(color: Colors.blue),
               ),
-              Row(
-                  // mainAxisAlignment:
-                  // MainAxisAlignment.end,
-                  children: []),
             ],
           ),
         ),
@@ -131,7 +116,19 @@ class _p_dmapState extends State<p_dmap> {
             child: const Text('Close'),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              if (title == 'Dr,Ali ahmed') {
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const ClinicProfileMap()));
+              } else if (title == 'El_Nobaria') {
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const ClinicProfileMap2()));
+              }
+            },
             child: const Text('GO'),
           ),
         ],
@@ -150,10 +147,9 @@ class _p_dmapState extends State<p_dmap> {
                   mapType: MapType.normal,
                   myLocationEnabled: true,
                   zoomControlsEnabled: false,
-                  myLocationButtonEnabled: true,
+                  myLocationButtonEnabled: false,
                   initialCameraPosition: _kGooglePlex,
                   markers: markers,
-                  onCameraMove: (position) => position,
                 )
               : Center(
                   child: Container(
@@ -166,8 +162,8 @@ class _p_dmapState extends State<p_dmap> {
             padding: const EdgeInsets.all(15.0),
             child: SearchLocationWidget(
               mapController: _mapController,
-              pickedAddress: 'Search for Doctors',
-              isEnabled: null,
+              pickedAddress: 'Search for Assistant',
+              isEnabled: true,
               fromDialog: false,
               hint: 'l,ru;',
             ),
@@ -176,8 +172,8 @@ class _p_dmapState extends State<p_dmap> {
           //   bottom: 50,
           //   left: 50,
           //   child: Container(
-          //     height: 50,
-          //     width: 150,
+          //     height: 110,
+          //     width: 200,
           //     decoration: BoxDecoration(
           //         color: Colors.white.withOpacity(.5),
           //         borderRadius: BorderRadius.circular(16),
@@ -192,7 +188,7 @@ class _p_dmapState extends State<p_dmap> {
           //       child: Row(
           //         children: [
           //           Radio(
-          //             value: 'Assistant',
+          //             value: 'Doctor',
           //             activeColor: Colors.cyan,
           //             groupValue: val,
           //             onChanged: (value) async {
@@ -200,10 +196,10 @@ class _p_dmapState extends State<p_dmap> {
           //                 val = value;
           //                 markers.clear();
           //               });
-          //               await addMarketAssistant();
+          //               await addMarket();
           //             },
           //           ),
-          //           const Text('Assistant')
+          //           const Text('Doctor')
           //         ],
           //       ),
           //     ),

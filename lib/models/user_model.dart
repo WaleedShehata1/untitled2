@@ -124,6 +124,7 @@ class DoctorsModel {
       'address': address,
       'specialty': specialty,
       'price': price,
+      'rating': rating,
       'latitude': latitude,
       'longitude': longitude,
       'imageUrl': imageUrl,

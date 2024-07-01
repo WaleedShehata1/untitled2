@@ -27,7 +27,23 @@ class p_dhelp extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.”The purpose of lorem ipsum is to create a natural looking block of text (sentence, paragraph, page, etc.) that doesn't distract from the layout. A practice not without controversy, laying out pages with meaningless filler text can be very useful when the focus is meant to be on design, not content.The passage experienced a surge in popularity during the 1960s when Letraset used it on their dry-transfer sheets, and again during the 90s as desktop publishers bundled the text with their software. Today it's seen all around the web; on templates, websites, and stock designs. Use our generator to get your own, or read on for the authoritative history of lorem ipsum.",
+                  """Of course! Here are some instructions for using an app that provides the service of finding the nearest doctor or medical assistant:
+
+1. Download the app: Go to the app store on your smartphone and search for an app that offers the service of finding the nearest doctor or medical assistant. Download the app and install it on your phone.
+
+2. Log in or create an account: After installing the app, you may be prompted to log in if you already have an account. If you don't have an account, you will need to create a new one.
+
+3. Set your location: Once logged in, you may be asked to set your current location to determine the nearest doctors or medical assistants.
+
+4. Choose the service: Select the type of service you need, whether it's general treatment, online medical consultation, or other medical services.
+
+5. Select the doctor or medical assistant: After choosing the service, a list of available doctors or medical assistants in your area will appear. Choose the appropriate and closest person to you.
+
+6. Book an appointment: After selecting the doctor or medical assistant, you can book an appointment to visit them or for an online consultation.
+
+7. Receive the service: Go to the designated location at the scheduled appointment time and receive the desired service.
+
+These are the basic instructions for using an app that provides the service of finding the nearest doctor or medical assistant. It is always recommended to read the app's user guide for detailed instructions on how to use it correctly.""",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,

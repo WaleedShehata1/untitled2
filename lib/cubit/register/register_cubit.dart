@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:untitled/helper/snackBar.dart';
 
-import '../../models/request_model.dart';
 import '../../models/user_model.dart';
 
 part 'register_state.dart';
