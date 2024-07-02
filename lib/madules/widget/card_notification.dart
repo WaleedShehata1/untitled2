@@ -37,6 +37,7 @@ class CardNotification extends StatelessWidget {
                     Text(snap.hasData ? data['userName'] : "user Name"),
                     Text(snap.hasData ? data['specialty'] : "user specialty"),
                     Text(snap.hasData ? data['address'] : "user address"),
+                    Text("10:00 AM"),
                   ],
                 ),
                 trailing: Text(

@@ -101,9 +101,19 @@ class DoctorCard extends StatelessWidget {
                     children: [
                       const Icon(Icons.location_on),
                       const SizedBox(width: 4),
-                      Text(doctor.location),
+                      SizedBox(
+                        child: Text(
+                          doctor.location,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        width: 72,
+                      ),
                       const SizedBox(width: 25),
-                      Text('Price:${doctor.price}\$'),
+                      Text(
+                        'Price:${doctor.price}\$',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 4),

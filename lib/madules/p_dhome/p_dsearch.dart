@@ -134,8 +134,8 @@ class _p_dsearchState extends State<p_dsearch> {
                               ? ListView.builder(
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
-                                    if ((snapshot.data!.docs[index]
-                                                ['userName'] ==
+                                    if ((snapshot.data!.docs[1]['userName']
+                                                .toString() ==
                                             searchValue) ||
                                         searchValue.isEmpty) {
                                       return DoctorCard(

@@ -25,11 +25,15 @@ class _p_dmapState extends State<p_dmap> {
 
   final Set<Marker> markers = Set();
   static Position? position;
+  String searchValue = '';
+
   static final CameraPosition _kGooglePlex = CameraPosition(
     // target: LatLng(position!.latitude, position!.longitude),
     target: LatLng(position!.latitude, position!.longitude),
     zoom: 8.4746,
   );
+
+  get defultColor => null;
 
   Future<void> getMyCurrentLocation() async {
     position = await LocationHelper.getCurrentLocation()
@@ -140,7 +144,6 @@ class _p_dmapState extends State<p_dmap> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        // fit: StackFit.expand,
         children: [
           position != null
               ? GoogleMap(
@@ -160,51 +163,37 @@ class _p_dmapState extends State<p_dmap> {
                 ),
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: SearchLocationWidget(
-              mapController: _mapController,
-              pickedAddress: 'Search for Assistant',
-              isEnabled: true,
-              fromDialog: false,
-              hint: 'l,ru;',
+            child: Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(width: 1, color: Colors.grey)),
+                child: TextField(
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    hintText: 'Search for the doctor\'s name',
+                    hintStyle: TextStyle(color: defultColor),
+                    prefixIcon: Icon(Icons.search, color: defultColor),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      searchValue = value;
+                    });
+                  },
+                ),
+              ),
             ),
           ),
-          // Positioned(
-          //   bottom: 50,
-          //   left: 50,
-          //   child: Container(
-          //     height: 110,
-          //     width: 200,
-          //     decoration: BoxDecoration(
-          //         color: Colors.white.withOpacity(.5),
-          //         borderRadius: BorderRadius.circular(16),
-          //         border: const Border(
-          //           bottom: BorderSide(color: Colors.blue, width: 2),
-          //           top: BorderSide(color: Colors.blue, width: 2),
-          //           right: BorderSide(color: Colors.blue, width: 2),
-          //           left: BorderSide(color: Colors.blue, width: 2),
-          //         )),
-          //     child: Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 7),
-          //       child: Row(
-          //         children: [
-          //           Radio(
-          //             value: 'Doctor',
-          //             activeColor: Colors.cyan,
-          //             groupValue: val,
-          //             onChanged: (value) async {
-          //               setState(() {
-          //                 val = value;
-          //                 markers.clear();
-          //               });
-          //               await addMarket();
-          //             },
-          //           ),
-          //           const Text('Doctor')
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );

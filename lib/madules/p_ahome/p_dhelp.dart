@@ -27,8 +27,7 @@ class p_ahelp extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  """Of course! Here are some instructions for using an app that provides the service of finding the nearest doctor or medical assistant:
-
+                  """
 1. Download the app: Go to the app store on your smartphone and search for an app that offers the service of finding the nearest doctor or medical assistant. Download the app and install it on your phone.
 
 2. Log in or create an account: After installing the app, you may be prompted to log in if you already have an account. If you don't have an account, you will need to create a new one.
